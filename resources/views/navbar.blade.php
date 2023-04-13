@@ -34,15 +34,15 @@
           <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item nav-items">
-                <a class="nav-link nav-links" ria-current="page" href="MesAnnonces.php">
+                <a class="nav-link nav-links" ria-current="page" href="/MesAnnonces">
                   Mes annonces
                 </a>
               </li>
               <li class="nav-item nav-items">
-                <a class="nav-link nav-links" href="annonces.php">Accueil</a>
+                <a class="nav-link nav-links" href="/annonces">Accueil</a>
               </li>
               <li class="nav-item nav-items">
-                <a class="nav-link nav-links" href="depotAnnonce.php">Déposer une annonce</a>
+                <a class="nav-link nav-links" href="/depotAnnonces">Déposer une annonce</a>
               </li>
 
             </ul>
