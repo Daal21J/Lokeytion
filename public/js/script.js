@@ -70,14 +70,23 @@ if (exampleModal) {
 
 
 
+//MODAL Messages
+const exampleModal1 = document.getElementById('exampleModal1')
+if (exampleModal1) {
+  exampleModal1.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button1 = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const recipient1 = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an Ajax request here
+    // and then do the updating in a callback.
 
+    // Update the modal's content.
+    const modalTitle1 = exampleModal1.querySelector('.modal-title1')
+    const modalBodyInput1 = exampleModal1.querySelector('.modal-body1 input')
 
-
-
-
-
-
-
-
-
+    modalTitle1.textContent = 'Messages'
+    modalBodyInput1.value = recipient
+  })
+}
 

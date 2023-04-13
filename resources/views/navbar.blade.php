@@ -15,9 +15,9 @@
   <script src="https://kit.fontawesome.com/c3b8d3700c.js" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="{{url('css/navbar.css')}}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{url('css/profile.css')}}">
+  
+  <link rel="stylesheet" href="{{url('css/navbar.css')}}" />
+
   
   <title>Details</title>
 </head>
@@ -51,10 +51,15 @@
                 <i class="fa-solid fa-bell nav-icon"></i>
               </a>
 
+              <a href="" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              <i class="fa-solid fa-envelope nav-icon"></i>
+</a>
+                  <!--
               <a href="" class="text-decoration-none text-dark">
                 <i class="fa-solid fa-envelope nav-icon"></i>
               </a>
-              <a href="panier.php" class="text-decoration-none text-dark">
+-->
+              <a href="/MonPanier" class="text-decoration-none text-dark">
                 <i class="fa-solid fa-cart-arrow-down nav-icon"></i>
               </a>
               <!--<a href="" class="text-decoration-none text-dark">
@@ -81,23 +86,20 @@
               </div>
               <ul class="profile-dropdown-list">
                 <li class="profile-dropdown-list-item">
+                  <!--
+                  <button type="button" class="boutton" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-regular fa-user"></i>
+                    Modifier Profile
+                  </button>
+-->
                   <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   <i class="fa-regular fa-user"></i>
                   Modifier Profile
-                </a>                 
-                <!-- <button type="button" class="boutton" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fa-regular fa-user"></i>
-                    Modifier Profile
-                  </button>-->
+                </a>
                 </li>
+               
                 <li class="profile-dropdown-list-item">
-                  <a href="#">
-                    <i class="fa-regular fa-envelope"></i>
-                    Boite de messages
-                  </a>
-                </li>
-                <li class="profile-dropdown-list-item">
-                  <a href="Demandes.php">
+                  <a href="/MesDemandes">
                   <i class="fas fa-id-badge"></i> <!-- icône de badge d'identité solide -->
                     Mes demandes
                   </a>
@@ -118,7 +120,9 @@
   </nav>
 
   <!--MODAL PROFILE-->
-  @extends('profile')
+  @include('profile')
+  @include('messages')
+
 
 </body>
 

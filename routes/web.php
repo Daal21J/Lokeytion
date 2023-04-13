@@ -20,10 +20,10 @@ use App\Http\Controllers\CommentController;
 
 Route::get('/',[StaticController::class,'index']);
 Route::get('/login',[StaticController::class,'login']);
-Route::get('/annonces',[AnnonceController::class,'show']);
+Route::get('/annonces',[AnnonceController::class,'showAnnonces']);
 Route::get('/depotAnnonces',[AnnonceController::class,'depot']);
 Route::get('/detail',[AnnonceController::class,'details']);
 Route::get('/MesAnnonces',[AnnonceController::class,'mesannonces']);
-Route::get('/MesDemandes',[DemandeController::class,'show']);
-Route::get('/MonPanier',[PanierController::class,'show']);
-Route::get('/Comment',[CommentController::class,'show']);
+Route::get('/MesDemandes',[DemandeController::class,'showDemandes']);
+Route::get('/MonPanier',[PanierController::class,'showPanier']);
+Route::get('/Comment',[CommentController::class,'showComment']);

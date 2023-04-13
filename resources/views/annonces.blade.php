@@ -1,5 +1,4 @@
-@extends('layout')
-@section('content')
+@include('navbar')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -324,9 +323,9 @@
   </div>
     </center>
   <!-- Product List End -->
-  @endsection
-  <!-- Footer -->
 
+  <!-- Footer -->
+  @include('footer')
   <!-- JAVASCRIPT FILES -->
   <script src="{{url('js/swiper-bundle.min.js')}}"></script>
   <script src="{{url('js/script.js')}}"></script>
@@ -356,7 +355,9 @@
   <!-- Template Javascript -->
   <script src="{{url('js/main.js')}}"></script>
   <script src="{{url('js/zoom.js')}}"></script>
-
+    <!-- JAVASCRIPT FILES -->
+    <script src="{{url('js/swiper-bundle.min.js')}}"></script>
+  <script src="{{url('js/script.js')}}"></script>
 
 
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class DemandeController extends Controller
 {
-    public function show(){
+    public function showDemandes(){
         return view('Demandes');
     }
 

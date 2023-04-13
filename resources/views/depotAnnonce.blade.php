@@ -1,5 +1,5 @@
-@extends('layout')
-@section('content')
+@include('navbar')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -275,7 +275,7 @@
 
   <br><br><br><br>
    
-
+  @include('footer')
 
 
   <!-- JAVASCRIPT FILES -->
@@ -286,7 +286,7 @@
   <script src="https://cdn.jsdelivr.net/gh/user/repo/file.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{url('js/depotAnnonce.js')}}"></script>
-  @endsection
+ 
 </body>
 
 </html>

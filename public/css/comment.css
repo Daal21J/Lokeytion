@@ -58,3 +58,22 @@
   #submit:hover {
     background-color: gold;
   }
+
+  .btn-primary {
+    background-color: #ffde59;
+    color: #2e2e2e;
+    border-radius: 2rem;
+    border: #ffde59;
+  }
+  .btn-primary:hover {
+    background-color: #ffde5988;
+    /* color: #2e2e2e;*/
+  }
+  
+  .btn-secondary {
+    border-radius: 2rem;
+  }
+  
+  .btn-secondary:hover {
+    color: #2e2e2e;
+  }

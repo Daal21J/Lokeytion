@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function show(){
+    public function showComment(){
         return view('comment');
     }
 }

@@ -1,5 +1,4 @@
-@extends('layout')
-@section('content')
+@include('navbar')
  <!DOCTYPE html>
 <html lang="en" title="Coding design">
 
@@ -207,7 +206,7 @@
           <!-- JAVASCRIPT FILES -->
   <script src="{{url('js/swiper-bundle.min.js')}}"></script>
   <script src="{{url('js/script.js')}}"></script>
-  @endsection
+  @include('footer')
 </body>
 
 </html>

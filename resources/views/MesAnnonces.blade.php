@@ -1,5 +1,4 @@
-@extends('layout')
-@section('content')
+@include('navbar')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -255,7 +254,7 @@
   <script src="{{url('js/main.js')}}"></script>
   <script src="{{url('js/zoom.js')}}"></script>
 
-  @endsection
+  @include('footer')
 </body>
 
 </html>

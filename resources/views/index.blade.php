@@ -1,4 +1,3 @@
-@section('index')
 <!doctype html>
 <html lang="en">
 
@@ -166,9 +165,9 @@
 </section>
 
     </main>
-@endsection
 
-    @extends('footer')
+
+    @include('footer')
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>

@@ -1,5 +1,4 @@
-@extends('layout')
-@section('content')
+@include('navbar')
 <!DOCTYPE html>
 <html>
   <head>
@@ -45,11 +44,11 @@
     </div>
 
 <br><br><br>
-    
+@include('footer')   
   
 
       <script src="{{url('js/swiper-bundle.min.js')}}"></script>
       <script src="{{url('js/script.js')}}"></script>
-  @endsection
+ 
   </body>
 </html>

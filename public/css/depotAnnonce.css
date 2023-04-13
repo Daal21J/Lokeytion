@@ -262,14 +262,7 @@ textarea,
   background-color: #ffde59;
   color: #2e2e2e;
 }
-/*
-	 width: 100%;
-	 border: 2px solid #ffde59;
-	 padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
-	 color: currentColor;
-	 background: transparent;
-	 border-radius: 50%;
-   */
+
 .form-check-input {
   border: 2px solid currentColor !important;
 }
@@ -634,3 +627,25 @@ body {
 .box2 form {
   width: 100%;
 }
+
+
+
+.btn-primary {
+  background-color: #ffde59;
+  color: #2e2e2e;
+  border-radius: 2rem;
+  border: #ffde59;
+}
+.btn-primary:hover {
+  background-color: #ffde5988;
+  /* color: #2e2e2e;*/
+}
+
+.btn-secondary {
+  border-radius: 2rem;
+}
+
+.btn-secondary:hover {
+  color: #2e2e2e;
+}
+
