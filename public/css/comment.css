@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", sans-serif;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+}
+#feedback {
+    background-color: #FFDE59;
+    box-shadow: 5px 5px 10px grey;
+    padding: 20px;
+    margin: 100px auto;
+    width: 50%;
+    text-align: justify;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  .column {
+    display: inline-block;
+    width: 30%;
+    vertical-align: middle;
+    margin: 10px auto;
+  }
+
+  .text {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .stars {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  #comment {
+    width: 80%;
+    height: 100px;
+    margin-top: 10px;
+    border-radius: 25px;
+    padding: 20px;
+  }
+
+  #submit {
+    background-color: #FFDE59;
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 25px;
+
+  }
+
+  #submit:hover {
+    background-color: gold;
+  }
