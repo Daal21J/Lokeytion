@@ -59,134 +59,59 @@
 
                 <thead>
                     <tr>
-                        
+                 
                     </tr>
                     <tr>
                         <th> Client <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Model <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Annonce <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Categorie <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Prix <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Ville<span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Duree<span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Jour dereservation<span class="icon-arrow">&UpArrow;</span></th>
                         <th> Action <span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
                     
                 </thead>
                 <tbody>
-                    <tr>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-                        <td> Seoul </td>
-                        <td><strong>$399.99</strong> </td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
+              
+                @php
+                 $i=0;
+                 $j=0;
+                @endphp
+                @foreach($annonces as $annonce)
+                  @foreach($demandes[$i] as $demande )
+                <tr>
+                        @foreach($clients[$j] as $client)
+                         @if($client['id'] == $demande->id_client)
+                        <td> <img src="{{url('images/profile-pic.jpg')}}" alt="">{{ $client['nom']." " }}{{ $client['prenom'] }}</td>
+                         @endif
+                        
+                       
+                       
+                        <td> <img src="{{url('images/w.jpeg')}}" alt="">{{ $annonce['titre'] }}</td>
+                        @foreach($objets[$i] as $objet)
+                        @if($annonce['id_objet'] == $objet['id'])
+                        <td> {{ $objet['categorie']}} </td>
+                        @endif
+                        @endforeach
+                        <td><strong>{{ "$".$annonce['prix'] }}</strong> </td>
+                        <td>{{ $client['ville'] }}</td>
+                        <td>{{ $demande['jour_reservation'] }}</td>
                         <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
+                            <a href="/Demande/" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
                             <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
                         </td>
+                        @php
+                        $j++;
+                        @endphp        
+                         @endforeach
                         
                     </tr>
-                    <tr>
-                        <td><img src="images/Jeet Saru.jpg" alt=""> Jeet Saru </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-                        <td> Kathmandu </td>
-                        <td> <strong>$399.99</strong> </td>
-                        <td>Tetouan </td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a> </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Sonal Gharti.jpg" alt=""> Sonal Gharti </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> Tokyo </td>
-                        <td><strong>$399.99</strong></td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a> </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Alson GC.jpg" alt=""> Alson GC </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> New Delhi </td>
-                        <td> <strong>$399.99</strong> </td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Sarita Limbu.jpg" alt=""> Sarita Limbu </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> Paris </td>
-                        <td><strong>$399.99</strong></td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Alex Gonley.jpg" alt=""> Alex Gonley </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> London </td>
-                        <td><strong>$399.99</strong> </td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Alson GC.jpg" alt=""> Jeet Saru </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> New York </td>
-                        <td><strong>$399.99</strong></td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Sarita Limbu.jpg" alt=""> Aayat Ali Khan </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> Islamabad </td>
-                        <td> <strong>$399.99</strong></td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td><img src="images/Alex Gonley.jpg" alt=""> Alson GC </td>
-                        <td> <img src="images/Zinzu Chan Lee.jpg" alt="">Zinzu Chan Lee</td>
-
-                        <td> Dhaka </td>
-                        <td> <strong>$399.99</strong> </td>
-                        <td>Tetouan</td>
-                        <td>De mardi 23.00 A jeudi 22.00</td>
-                        <td> 
-
-                            <a href="#" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a> </td>
-                    </tr>
+                    @endforeach
+                    @php
+                        $i++;
+                        @endphp
+                    @endforeach
                 </tbody>
             </table>
         </section>

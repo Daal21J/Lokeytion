@@ -18,6 +18,7 @@ class CreateAnnoncesTable extends Migration
             $table->integer('id_objet');
             $table->integer('id_user');
             $table->string('titre');
+            $table->string('ville');
             $table->float('prix');
             $table->string('status');
             $table->timestamps();

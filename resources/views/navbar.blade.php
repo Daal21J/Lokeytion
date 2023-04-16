@@ -27,7 +27,7 @@
   <nav class="navbar navbar-expand-lg ">
     <div class="container d-flex justify-content-between">
       <div class="logo">
-        <img src="images/logo1.jpg" alt="" >
+        <img src="{{url('images/logo1.jpg')}}" alt="" >
       </div>
       <nav class="navbar2 navbar-expand-lg ">
         <div class="container-fluid">
@@ -99,7 +99,7 @@
                 </li>
                
                 <li class="profile-dropdown-list-item">
-                  <a href="/MesDemandes">
+                  <a href="/Demandes/show">
                   <i class="fas fa-id-badge"></i> <!-- icône de badge d'identité solide -->
                     Mes demandes
                   </a>
