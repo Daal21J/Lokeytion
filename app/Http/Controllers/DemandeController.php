@@ -46,7 +46,6 @@ class DemandeController extends Controller
                 'etat' => 'non lu'
             ]);
             $notif->save();
-            return $temp;
            return  redirect()->route('Demandes.showDemande');
     }
 
