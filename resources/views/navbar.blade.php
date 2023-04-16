@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="{{url('css/navbar.css')}}" />
 
   
-  <title>Details</title>
+  <title>LoKeytion</title>
 </head>
 
 <body>

@@ -29,13 +29,10 @@
           </div>
   
     
-   
-   <!-- <center>
-    <h1 data-shadow='Demandes'>Demandes</h1>
-</center>-->
+
 <center>
 <div class="input-group" style="width:500px; height:50px; box-shadow: 0 0.8rem 1.2rem rgba(0, 0, 0, 0.6);"> 
-    <input type="search" placeholder="Rechercher..." class="form-control search-input">
+    <input type="search" placeholder="Rechercher par titre ou categorie de l'annonce..." class="form-control search-input">
     <div class="input-group-prepend"style="height:50px; width:50px;">
         <span class="input-group-text" style="width: min-content;
     display: flex;
@@ -78,6 +75,7 @@
                  $i=0;
                  $j=0;
                 @endphp
+                @if(!empty($clients))
                 @foreach($annonces as $annonce)
                   @foreach($demandes[$i] as $demande )
                 <tr>
@@ -98,8 +96,8 @@
                         <td>{{ $client['ville'] }}</td>
                         <td>{{ $demande['jour_reservation'] }}</td>
                         <td> 
-                            <a href="/Demande/" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="{{route('Demande.refuse', $demande['id'])}}" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
+                            <a href="{{route('Demande.refuse', $demande['id'])}}" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
+                            <a href="{{route('Demande.accept', $demande['id'])}}" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
                         </td>
                         @php
                         $j++;
@@ -112,6 +110,16 @@
                         $i++;
                         @endphp
                     @endforeach
+                    
+                @else
+                <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <center><td><p>AUCUNE DEMANDES</p></td></center>
+                    
+                </tr> 
+                @endif
                 </tbody>
             </table>
         </section>
