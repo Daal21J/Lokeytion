@@ -99,7 +99,7 @@
                 </li>
                
                 <li class="profile-dropdown-list-item">
-                  <a href="/Demandes/show">
+                  <a href="/MesDemandes">
                   <i class="fas fa-id-badge"></i> <!-- icône de badge d'identité solide -->
                     Mes demandes
                   </a>

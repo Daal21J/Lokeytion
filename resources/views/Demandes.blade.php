@@ -99,7 +99,7 @@
                         <td>{{ $demande['jour_reservation'] }}</td>
                         <td> 
                             <a href="/Demande/" class="text-danger mr-2" ><i  class="fas fa-trash-alt"></i></a>
-                            <a href="#" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
+                            <a href="{{route('Demande.refuse', $demande['id'])}}" class="text-warning mr-2"><i class="fas fa-edit"></i></a>
                         </td>
                         @php
                         $j++;

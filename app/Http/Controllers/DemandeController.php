@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Demande;
 use App\Models\User;
+use App\Models\Notification;
 use App\Models\Objet;
 use App\Models\Annonce;
 use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
+
 
 class DemandeController extends Controller
 {
-    public function show(){
+    public function showDemande(){
         $i=0;
         $j=0;
         $annonces = Annonce::where('id_user', '=', '1')->get();
@@ -29,9 +32,26 @@ class DemandeController extends Controller
     }
 
 
-    public function refuse($demande){
-            
+    public function refuse($dmd){
+            $demande = Demande::find($dmd);
+            $temp = $demande->id_client;
+            $demande->etat = 'Refusée';
+            $demande->save();
+            $client = User::find($temp);
+            $temp = $client['id'];
+            $notif = Notification::create([
+                'id_user' => $temp,
+                'id_demande' => $dmd,
+                'msg' => ' Votre demande est refusée ',
+                'etat' => 'non lu'
+            ]);
+            $notif->save();
+            return $temp;
+           return  redirect()->route('Demandes.showDemande');
+    }
 
+    public function myfnct(){
+        return bonjour;
     }
   
 }

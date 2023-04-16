@@ -24,7 +24,7 @@ Route::get('/annonces',[AnnonceController::class,'showAnnonces']);
 Route::get('/depotAnnonces',[AnnonceController::class,'depot']);
 Route::get('/detail',[AnnonceController::class,'details']);
 Route::get('/MesAnnonces',[AnnonceController::class,'mesannonces']);
-
+Route::get('/MesDemandes',[DemandeController::class,'showDemande']);
+Route::get('/MesDemandes/Refuse/{id}',[DemandeController::class,'refuse'])->name('Demande.refuse');
 Route::get('/MonPanier',[PanierController::class,'showPanier']);
 Route::get('/Comment',[CommentController::class,'showComment']);
-Route::resource('Demandes', DemandeController::class);
