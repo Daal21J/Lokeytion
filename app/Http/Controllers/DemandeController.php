@@ -35,6 +35,13 @@ class DemandeController extends Controller
             if($diffInDays >= 1 ){
                 $demande->etat = 'Expirée';
                 $demande->save();
+                $notif = Notification::create([
+                    'id_user' => $temp,
+                    'id_demande' => $dmd,
+                    'msg' => ' Votre demande a Expirée ',
+                    'etat' => 'non lu'
+                ]);
+            $notif->save();
             }
                 }
             }
