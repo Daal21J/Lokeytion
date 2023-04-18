@@ -9,6 +9,7 @@ use App\Models\Objet;
 use App\Models\Annonce;
 use App\Models\JourDispo;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyEmail;
 use App\Http\Controllers\UserController;
@@ -17,9 +18,30 @@ use App\Http\Controllers\UserController;
 class DemandeController extends Controller
 {
     public function showDemande(){
+        
+        
         $i=0;
         $j=0;
         $annonces = Annonce::where('id_user', '=', '1')->get();
+        foreach($annonces as $annonce){
+            $temp = $annonce['id'];
+            $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
+            if(count($demandes[$i]) >0){
+                foreach($demandes[$i] as $demande){
+            $date1 = Carbon::parse( $demande->created_at);
+            $date2 = Carbon::now();
+            $diffInDays = $date1->diff($date2)->d;
+           
+            if($diffInDays >= 1 ){
+                $demande->etat = 'Expirée';
+                $demande->save();
+            }
+                }
+            }
+            $i++;
+        }
+        $i=0;
+        $demandes=array();
         foreach($annonces as $annonce){
             $temp = $annonce['id'];
             $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->get();
