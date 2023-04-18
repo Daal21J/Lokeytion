@@ -79,7 +79,7 @@ class DemandeController extends Controller
             }
         }
         
-      /*  $client = User::find($temp);
+       // $client = User::find($temp);
         //Mail::to('example@example.com')->send(new MyEmail($data));
         $temp = $client['id'];
         $notif = Notification::create([
@@ -88,7 +88,7 @@ class DemandeController extends Controller
             'msg' => ' Votre demande est Acceptée ',
             'etat' => 'non lu'
         ]);
-        $notif->save();*/
+        $notif->save();
        
         return  redirect()->route('Demande.show');
     }
@@ -100,7 +100,7 @@ class DemandeController extends Controller
         $clients=array();
         $demandes=array();
         $objets=array();
-        $annonces = Annonce::where('id_user', '=', '1')->where('titre', 'like', $dmd->keyword.'%' )->get();
+        $annonces = Annonce::where('id_user', '=', '1')->where('titre', 'like', '%'.$dmd->keyword.'%' )->get();
         if(count($annonces)>0){
             foreach($annonces as $annonce){
                 $temp = $annonce['id'];
@@ -123,7 +123,7 @@ class DemandeController extends Controller
             $annonces = Annonce::where('id_user', '=', '2')->get();
             foreach($annonces as $annonce){
                 $temp = $annonce['id'];
-                $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->where('categorie', 'like',$dmd->keyword.'%' )->get();
+                $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->where('categorie', 'like','%'.$dmd->keyword.'%' )->get();
             if(count($objets[$i])>0){
                 $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
             if(count($demandes[$i]) >0){
@@ -137,7 +137,6 @@ class DemandeController extends Controller
           }
         }
         
-       // return $demandes;
     }
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
     }
