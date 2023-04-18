@@ -19,7 +19,7 @@ class DemandeController extends Controller
     public function showDemande(){
         $i=0;
         $j=0;
-        $annonces = Annonce::where('id_user', '=', '2')->get();
+        $annonces = Annonce::where('id_user', '=', '1')->get();
         foreach($annonces as $annonce){
             $temp = $annonce['id'];
             $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->get();
@@ -94,30 +94,51 @@ class DemandeController extends Controller
     }
 
     
-    public function search(Request $demande){
+    public function search(Request $dmd){
         $i=0;
         $j=0;
-        $temp = $demande->input('search');
-        $annonces = Annonce::where('id_user', '=', '1')->where('titre', '=', $temp)->get();
-        foreach($annonces as $annonce){
-            $temp = $annonce['id'];
-            $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->where('categorie', '=', $tmp)->get();
-            if(!empty($objets[$i])){
+        $clients=array();
+        $demandes=array();
+        $objets=array();
+        $annonces = Annonce::where('id_user', '=', '1')->where('titre', 'like', $dmd->keyword.'%' )->get();
+        if(count($annonces)>0){
+            foreach($annonces as $annonce){
+                $temp = $annonce['id'];
+                $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->get();
+       
                 $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
-                if(count($demandes[$i]) >0){
-                    foreach($demandes[$i] as $demande){
-                        $temp2 = $demande['id_client'] ;
-                        $clients[$j] = User::where('id', '=', $temp2)->get(); 
-                        $j++;
-                    }
-                }else {
-                    $clients=array();
+            if(count($demandes[$i]) >0){
+                foreach($demandes[$i] as $demande){
+                    $temp2 = $demande['id_client'] ;
+                    $clients[$j] = User::where('id', '=', $temp2)->get(); 
+                    $j++;
                 }
-                   
-                $i++;
-            }
+            
+               
+            $i++;
         }
-         
+    }
+        }else {
+            
+            $annonces = Annonce::where('id_user', '=', '2')->get();
+            foreach($annonces as $annonce){
+                $temp = $annonce['id'];
+                $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->where('categorie', 'like',$dmd->keyword.'%' )->get();
+            if(count($objets[$i])>0){
+                $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
+            if(count($demandes[$i]) >0){
+                foreach($demandes[$i] as $demande){
+                    $temp2 = $demande['id_client'] ;
+                    $clients[$j] = User::where('id', '=', $temp2)->get(); 
+                    $j++;
+                }
+            }
+            $i++;
+          }
+        }
+        
+       // return $demandes;
+    }
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
     }
   
