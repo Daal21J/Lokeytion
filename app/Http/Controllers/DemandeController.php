@@ -19,7 +19,6 @@ class DemandeController extends Controller
 {
     public function showDemande(){
         
-        
         $i=0;
         $j=0;
         $annonces = Annonce::where('id_user', '=', '1')->get();
@@ -35,6 +34,7 @@ class DemandeController extends Controller
             if($diffInDays >= 1 ){
                 $demande->etat = 'Expirée';
                 $demande->save();
+                $dmd = $demande->id;
                 $notif = Notification::create([
                     'id_user' => $temp,
                     'id_demande' => $dmd,
@@ -72,9 +72,13 @@ class DemandeController extends Controller
     public function refuse($dmd){
 
         $demande = Demande::find($dmd);
+        $annonce = $demande->id_annonce;
         $temp = $demande->id_client;
         $demande->etat = 'Refusée';
         $demande->save();
+        $annonces = Annonce::find($annonce);
+        $annonces->status = "active";
+        $annonces->save(); 
         $client = User::find($temp);
         $temp = $client['id'];
         $notif = Notification::create([
@@ -97,7 +101,9 @@ class DemandeController extends Controller
         $demande->save();
         $parts = explode(",", $demande->jour_reservation);
         $annonce = $demande->id_annonce;
-      
+        $annonces = Annonce::find($annonce);
+        $annonces->status = "active";
+        $annonces->save(); 
         $jours = JourDispo::where('id_annonce', '=',$annonce )->get();
         foreach($jours as $day){
             for($i=0 ; $i<count($parts);$i++){
@@ -107,10 +113,7 @@ class DemandeController extends Controller
                 }
             }
         }
-        
-       // $client = User::find($temp);
-        //Mail::to('example@example.com')->send(new MyEmail($data));
-        $temp = $client['id'];
+        $temp = $demande->id_client;
         $notif = Notification::create([
             'id_user' => $temp,
             'id_demande' => $dmd,
@@ -118,6 +121,27 @@ class DemandeController extends Controller
             'etat' => 'non lu'
         ]);
         $notif->save();
+        
+       // $client = User::find($temp);
+        //Mail::to('example@example.com')->send(new MyEmail($data));
+        $j = count($parts)-1;
+        $givenDay = $parts[$j]; // The given day
+        $today = Carbon::today(); // Get today's date
+       
+        $dayOfWeek = $today->dayOfWeek;
+            $dayMap = [
+                'dimanche' => 0,
+                'lundi' => 1,
+                'mardi' => 2,
+                'mercredi' => 3,
+                'jeudi' => 4,
+                'vendredi' => 5,
+                'samedi' => 6,
+            ];
+        $givenDayNumber = $dayMap[strtolower($givenDay)];
+        $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
+    
+      
        
         return  redirect()->route('Demande.show');
     }

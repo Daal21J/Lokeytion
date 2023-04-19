@@ -31,11 +31,11 @@
     
 
 <center>
-    <form action="/MesDemandes/search" class="input-group" style="width:500px; height:50px; box-shadow: 0 0.8rem 1.2rem rgba(0, 0, 0, 0.6);">
+    <form action="/MesDemandes/search" class="input-group" style="width:495px; height:40px; box-shadow: 0 0.8rem 1.2rem rgba(0, 0, 0, 0.6);">
    
     <input type="search" name="keyword" placeholder="Rechercher par titre ou categorie de l'annonce..." class="form-control search-input">
     <div >
-    <button type="submit" class="input-group-prepend" style="height:50px; width:50px;"><span class="input-group-text" >
+    <button type="submit" class="input-group-prepend" style="height:45px; width:50px;"><span class="input-group-text" >
             <i class="fa fa-search" ></i>
     </span></button>    
     
