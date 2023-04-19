@@ -21,7 +21,7 @@ class DemandeController extends Controller
         
         $i=0;
         $j=0;
-        $annonces = Annonce::where('id_user', '=', '1')->get();
+        $annonces = Annonce::where('id_user', '=', '2')->get();
         foreach($annonces as $annonce){
             $temp = $annonce['id'];
             $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
@@ -100,6 +100,7 @@ class DemandeController extends Controller
         $demande->etat = 'Acceptée';
         $demande->save();
         $parts = explode(",", $demande->jour_reservation);
+       
         $annonce = $demande->id_annonce;
         $annonces = Annonce::find($annonce);
         $annonces->status = "active";
@@ -108,8 +109,29 @@ class DemandeController extends Controller
         foreach($jours as $day){
             for($i=0 ; $i<count($parts);$i++){
                 if($parts[$i] == $day->jour){
-                    $day->etat = 'reserve';
-                    $day->save();
+                    $givenDay = $parts[$i]; // The given day
+                    $today = Carbon::today(); // Get today's date
+                    $dayOfWeek = $today->dayOfWeek;
+            $dayMap = [
+                'dimanche' => 0,
+                'lundi' => 1,
+                'mardi' => 2,
+                'mercredi' => 3,
+                'jeudi' => 4,
+                'vendredi' => 5,
+                'samedi' => 6,
+            ];
+                   $givenDayNumber = $dayMap[strtolower($givenDay)];
+                   $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
+                   $emaildays = 0;
+                   if($daysUntilNextDay > $emaildays){
+                    $emaildays = $daysUntilNextDay;
+                   }
+                   $nextDay = $today->copy()->addDays($daysUntilNextDay);
+                   $nextDayFormatted = $nextDay->format('Y-m-d');
+                   $day->reserved_for = $nextDayFormatted;
+                   $day->etat = 'reserve';
+                   $day->save();
                 }
             }
         }
@@ -124,22 +146,8 @@ class DemandeController extends Controller
         
        // $client = User::find($temp);
         //Mail::to('example@example.com')->send(new MyEmail($data));
-        $j = count($parts)-1;
-        $givenDay = $parts[$j]; // The given day
-        $today = Carbon::today(); // Get today's date
        
-        $dayOfWeek = $today->dayOfWeek;
-            $dayMap = [
-                'dimanche' => 0,
-                'lundi' => 1,
-                'mardi' => 2,
-                'mercredi' => 3,
-                'jeudi' => 4,
-                'vendredi' => 5,
-                'samedi' => 6,
-            ];
-        $givenDayNumber = $dayMap[strtolower($givenDay)];
-        $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
+       
     
       
        
