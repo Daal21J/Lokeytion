@@ -17,11 +17,11 @@ use App\Http\Controllers\UserController;
 
 class DemandeController extends Controller
 {
-    public function showDemande(){
-        
+    public function showDemandes(){
+
         $i=0;
         $j=0;
-        $annonces = Annonce::where('id_user', '=', '1')->get();
+        $annonces = Annonce::where('id_user', '=', '2')->get();
         foreach($annonces as $annonce){
             $temp = $annonce['id'];
             $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
@@ -30,7 +30,7 @@ class DemandeController extends Controller
             $date1 = Carbon::parse( $demande->created_at);
             $date2 = Carbon::now();
             $diffInDays = $date1->diff($date2)->d;
-           
+
             if($diffInDays >= 1 ){
                 $demande->etat = 'Expirée';
                 $demande->save();
@@ -56,13 +56,13 @@ class DemandeController extends Controller
         if(count($demandes[$i]) >0){
             foreach($demandes[$i] as $demande){
                 $temp2 = $demande['id_client'] ;
-                $clients[$j] = User::where('id', '=', $temp2)->get(); 
+                $clients[$j] = User::where('id', '=', $temp2)->get();
                 $j++;
             }
         }else {
             $clients=array();
         }
-           
+
         $i++;
     }
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
@@ -78,7 +78,7 @@ class DemandeController extends Controller
         $demande->save();
         $annonces = Annonce::find($annonce);
         $annonces->status = "active";
-        $annonces->save(); 
+        $annonces->save();
         $client = User::find($temp);
         $temp = $client['id'];
         $notif = Notification::create([
@@ -92,7 +92,7 @@ class DemandeController extends Controller
            return  redirect()->route('Demande.show');
         }
 
-   
+
     public function accept($dmd){
 
         $demande = Demande::find($dmd);
@@ -100,16 +100,38 @@ class DemandeController extends Controller
         $demande->etat = 'Acceptée';
         $demande->save();
         $parts = explode(",", $demande->jour_reservation);
+
         $annonce = $demande->id_annonce;
         $annonces = Annonce::find($annonce);
         $annonces->status = "active";
-        $annonces->save(); 
+        $annonces->save();
         $jours = JourDispo::where('id_annonce', '=',$annonce )->get();
         foreach($jours as $day){
             for($i=0 ; $i<count($parts);$i++){
                 if($parts[$i] == $day->jour){
-                    $day->etat = 'reserve';
-                    $day->save();
+                    $givenDay = $parts[$i]; // The given day
+                    $today = Carbon::today(); // Get today's date
+                    $dayOfWeek = $today->dayOfWeek;
+            $dayMap = [
+                'dimanche' => 0,
+                'lundi' => 1,
+                'mardi' => 2,
+                'mercredi' => 3,
+                'jeudi' => 4,
+                'vendredi' => 5,
+                'samedi' => 6,
+            ];
+                   $givenDayNumber = $dayMap[strtolower($givenDay)];
+                   $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
+                   $emaildays = 0;
+                   if($daysUntilNextDay > $emaildays){
+                    $emaildays = $daysUntilNextDay;
+                   }
+                   $nextDay = $today->copy()->addDays($daysUntilNextDay);
+                   $nextDayFormatted = $nextDay->format('Y-m-d');
+                   $day->reserved_for = $nextDayFormatted;
+                   $day->etat = 'reserve';
+                   $day->save();
                 }
             }
         }
@@ -121,32 +143,18 @@ class DemandeController extends Controller
             'etat' => 'non lu'
         ]);
         $notif->save();
-        
-       // $client = User::find($temp);
+
+        // $client = User::find($temp);
         //Mail::to('example@example.com')->send(new MyEmail($data));
-        $j = count($parts)-1;
-        $givenDay = $parts[$j]; // The given day
-        $today = Carbon::today(); // Get today's date
-       
-        $dayOfWeek = $today->dayOfWeek;
-            $dayMap = [
-                'dimanche' => 0,
-                'lundi' => 1,
-                'mardi' => 2,
-                'mercredi' => 3,
-                'jeudi' => 4,
-                'vendredi' => 5,
-                'samedi' => 6,
-            ];
-        $givenDayNumber = $dayMap[strtolower($givenDay)];
-        $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
-    
-      
-       
+
+
+
+
+
         return  redirect()->route('Demande.show');
     }
 
-    
+
     public function search(Request $dmd){
         $i=0;
         $j=0;
@@ -158,21 +166,21 @@ class DemandeController extends Controller
             foreach($annonces as $annonce){
                 $temp = $annonce['id'];
                 $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->get();
-       
+
                 $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
             if(count($demandes[$i]) >0){
                 foreach($demandes[$i] as $demande){
                     $temp2 = $demande['id_client'] ;
-                    $clients[$j] = User::where('id', '=', $temp2)->get(); 
+                    $clients[$j] = User::where('id', '=', $temp2)->get();
                     $j++;
                 }
-            
-               
+
+
             $i++;
         }
     }
         }else {
-            
+
             $annonces = Annonce::where('id_user', '=', '2')->get();
             foreach($annonces as $annonce){
                 $temp = $annonce['id'];
@@ -182,16 +190,16 @@ class DemandeController extends Controller
             if(count($demandes[$i]) >0){
                 foreach($demandes[$i] as $demande){
                     $temp2 = $demande['id_client'] ;
-                    $clients[$j] = User::where('id', '=', $temp2)->get(); 
+                    $clients[$j] = User::where('id', '=', $temp2)->get();
                     $j++;
                 }
             }
             $i++;
           }
         }
-        
+
     }
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
     }
-  
+
 }

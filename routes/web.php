@@ -6,6 +6,8 @@ use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\CommentController;
+use App\Models\Annonce;
+use App\Models\Objet;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +24,16 @@ Route::get('/',[StaticController::class,'index']);
 Route::get('/login',[StaticController::class,'login']);
 Route::get('/annonces',[AnnonceController::class,'showAnnonces']);
 Route::get('/depotAnnonces',[AnnonceController::class,'depot']);
+Route::get('/editAnnonces/{id}', [AnnonceController::class, 'edit']);
 Route::get('/detail',[AnnonceController::class,'details']);
 Route::get('/MesAnnonces',[AnnonceController::class,'mesannonces']);
-Route::get('/MesDemandes',[DemandeController::class,'showDemande'])->name('Demande.show');
-Route::get('/MesDemandes/Refuse/{id}',[DemandeController::class,'refuse'])->name('Demande.refuse');
-Route::get('/MesDemandes/Accept/{id}',[DemandeController::class,'accept'])->name('Demande.accept');
-Route::get('/MesDemandes/search',[DemandeController::class,'search'])->name('Demande.search');
+Route::get('/MesDemandes',[DemandeController::class,'showDemandes']);
 Route::get('/MonPanier',[PanierController::class,'showPanier']);
 Route::get('/Comment',[CommentController::class,'showComment']);
+Route::get('/message', [CommentController::class, 'showMessage']);
+
+Route::post('/store', [AnnonceController::class, 'store'])->name('store');
+Route::post('/addComment', [CommentController::class, 'addComment'])->name('addComment');
+
+Route::put('/editAnnonces/{id}', [AnnonceController::class, 'update'])->name('update');
+

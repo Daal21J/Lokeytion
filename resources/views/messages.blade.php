@@ -22,13 +22,14 @@
                 </div>
                 <div class="modal-body1">
                 <p><br>
+                   
                     Veuillez prendre quelques instants pour remplir notre formulaire de
-                     satisfaction client en cliquant sur le lien ci-dessous. 
-                     Votre feedback nous permettra de mieux comprendre vos besoins 
+                     satisfaction client en cliquant sur le lien ci-dessous.
+                     Votre feedback nous permettra de mieux comprendre vos besoins
                      et d'améliorer constamment nos offres pour vous satisfaire davantage.<br>
                     </p><br>
 
-                   
+
                 </div>
                 <div class="modal-footer">
                     <a href="/Comment" class="btn btn-primary">Remplir le formulaire</a>

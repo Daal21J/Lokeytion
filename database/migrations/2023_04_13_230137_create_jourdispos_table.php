@@ -17,8 +17,6 @@ class CreateJourdisposTable extends Migration
             $table->increments('id');
             $table->integer('id_annonce');
             $table->string('jour');
-            $table->string('de');
-            $table->string('a');
             $table->string('etat');
             $table->timestamps();
         });

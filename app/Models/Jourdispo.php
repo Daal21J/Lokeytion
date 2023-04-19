@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class jourdispo extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_user','id_demande', 'msg','etat'];
+
+    protected $fillable1 = ['id_user', 'id_demande', 'msg', 'etat'];
+    protected $fillable = ['id_annonce','jour','etat'];
+
+
+
 }
+

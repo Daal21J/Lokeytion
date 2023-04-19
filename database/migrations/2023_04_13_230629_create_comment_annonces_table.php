@@ -17,8 +17,9 @@ class CreateCommentAnnoncesTable extends Migration
             $table->increments('id');
             $table->integer('id_annonce');
             $table->integer('id_commenter');
-            $table->float('note');
+            $table->string('note');
             $table->string('comment');
+            $table->string('role');
             $table->timestamps();
         });
     }

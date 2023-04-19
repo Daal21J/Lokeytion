@@ -13,6 +13,7 @@ class CreateAnnoncesTable extends Migration
      */
     public function up()
     {
+        /*
         Schema::create('annonces', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_objet');
@@ -23,6 +24,19 @@ class CreateAnnoncesTable extends Migration
             $table->string('status');
             $table->timestamps();
         });
+        */
+        Schema::create('annonces', function (Blueprint $table) {
+            $table->id();
+            $table->string('titre');
+            $table->decimal('prix');
+            $table->string('ville');
+            $table->enum('status', ['active', 'inactive']);
+            $table->string('categorie');
+            $table->text('description');
+            $table->string('image')->nullable();
+            $table->timestamps();
+        });
+
     }
 
     /**

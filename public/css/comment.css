@@ -28,13 +28,52 @@
   .text {
     font-weight: bold;
     margin-bottom: 10px;
+    margin-left: -100px;
   }
 
   .stars {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
   }
+
+  .stars label {
+    cursor: pointer;
+  }
+  .stars label input[type="checkbox"] {
+    display: none;
+  }
+  .stars label span {
+    position: relative;
+    display: inline-block;
+    padding: 15px 12px;
+    color: #404040;
+    font-size: 25px;
+    transition: 0.2s;
+    user-select: none;
+    overflow: hidden;
+  }
+  .stars label span:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+  }
+  .stars label input[type="checkbox"]:checked ~ span {
+    color: #ffde59;
+  }
+
+
+
+
+
+
+
+
+
 
   #comment {
     width: 80%;
@@ -69,11 +108,11 @@
     background-color: #ffde5988;
     /* color: #2e2e2e;*/
   }
-  
+
   .btn-secondary {
     border-radius: 2rem;
   }
-  
+
   .btn-secondary:hover {
     color: #2e2e2e;
   }
