@@ -11,7 +11,7 @@ use App\Models\JourDispo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\MyEmail;
+use App\Mail\SendMail;
 use App\Http\Controllers\UserController;
 
 
@@ -100,7 +100,6 @@ class DemandeController extends Controller
         $demande->etat = 'Acceptée';
         $demande->save();
         $parts = explode(",", $demande->jour_reservation);
-       
         $annonce = $demande->id_annonce;
         $annonces = Annonce::find($annonce);
         $annonces->status = "active";
@@ -143,14 +142,9 @@ class DemandeController extends Controller
             'etat' => 'non lu'
         ]);
         $notif->save();
-        
-       // $client = User::find($temp);
-        //Mail::to('example@example.com')->send(new MyEmail($data));
-       
-       
-    
-      
-       
+        $temp = $demande->id_client;
+        $client = User::find($temp);
+        Mail::to($client->email)->send(new SendMail($client,$annonces));
         return  redirect()->route('Demande.show');
     }
 
