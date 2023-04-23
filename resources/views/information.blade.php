@@ -1,11 +1,11 @@
 @component('mail::message')
-Bonjour, voici les inforamtions sur le client dont vous venez d'accepter la demande pour '{{$demande['titre']}}' le {{$demande["updated_at"]}}.
+Bonjour, voici les inforamtions sur le client dont vous venez d'accepter la demande pour '{{$demande['titre']}}' le <strong>{{$demande["updated_at"]}}</strong>.
 
-Nom Client : {{$client["nom"] }}
+Nom Client : <strong>{{$client["nom"] }}</strong>
 
-Email : {{$client['email']}}
+Email : <strong>{{$client['email']}}</strong>
 
-Ville : {{$client['ville']}}
+tel : <strong>{{$client['tel']}}</strong>
 
 
 

@@ -30,6 +30,6 @@ class FormMail extends Mailable
     */
    public function build()
    {
-       return $this->from('boulaichnasrallah@gmail.com','LoKEYtion')->subject('Information Client')->markdown('feedbackform');
+       return $this->from('lokeytion23@gmail.com','LOKEYTION')->subject('Information Client')->markdown('feedbackform');
    }
 }

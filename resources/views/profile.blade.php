@@ -30,21 +30,21 @@
                         </div>
                         <div class="form-item">
                             <label for="name">Nom complet</label>
-                            <label>{{$data->nom}}</label>
+                            <label>nom</label>
                             <input type="text"  id="name" placeholder="name">
                             
                         </div>
 
                         <div class="form-item">
                             <label for="email">Email</label>
-                            <label>{{$data->email}}</label>
+                            <label>email</label>
                             <input type="email" id="floatingInput" placeholder="name@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                             
                         </div>
 
                         <div class="form-item">
                             <label for="tel">Numéro de téléphone</label>
-                            <label>{{$data->tel}}</label>
+                            <label>tel</label>
                             <input type="text" id="floatingInput" placeholder="0666666666" pattern="[0-9]{10}">
                             
                         </div>
