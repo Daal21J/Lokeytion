@@ -36,22 +36,34 @@
           <fieldset class="block">
             <h2 class="form-h my-4">S'inscrire</h2>
 
-            <form action="">
+            <form action="{{route('registerUser')}}" method="post">
+            @if(Session::has('success'))
+              <div class="alert alert-success">{{Session::get('success')}}</div>
+              @endif
+              @if(Session::has('fail'))
+              <div class="alert alert-danger">{{Session::get('fail')}}</div>
+              @endif
+              @csrf
+              
               <div class="input-label">
-                <input placeholder="" type="email" class="input-text rounded-pill border border-dark">
+                <input placeholder="" type="email" name="email" value="{{old('email')}}" class="input-text rounded-pill border border-dark" required>
                 <label for="mon-input">Email :</label>
+                <span class="test-danger">@error('email') {{$message}} @enderror</span>
               </div>
               <div class="input-label">
-                <input placeholder="" type="text" class="input-text rounded-pill border border-dark">
+                <input placeholder="" type="text" name="nom" value="{{old('nom')}}" class="input-text rounded-pill border border-dark" required>
                 <label for="mon-input">Nom complet:</label>
+                <span class="test-danger">@error('nom') {{$message}} @enderror</span>
               </div>
               <div class="input-label">
-                <input placeholder="" type="tel" class="input-text rounded-pill border border-dark">
+                <input placeholder="" type="tel" name="tel" value="{{old('tel')}}" class="input-text rounded-pill border border-dark" required>
                 <label for="mon-input">Telephone :</label>
+                <span class="test-danger">@error('tel') {{$message}} @enderror</span>
               </div>
               <div class="input-label">
-                <input placeholder="" password type="password" class="input-text rounded-pill border border-dark">
+                <input placeholder="" password type="password" name="password" class="input-text rounded-pill border border-dark" required>
                 <label for="mon-input">Mot de passe :</label>
+                <span class="test-danger">@error('password') {{$message}} @enderror</span>
               </div>
               <input type="submit" value="S'inscrire" class="input-submit">
             </form>
@@ -63,14 +75,24 @@
           <fieldset>
             <h2 class="form-h my-4">Se connecter</h2>
 
-            <form action="">
+            <form action="{{route('loginUser')}}" method="post">
+              @if(Session::has('success'))
+              <div class="alert alert-success">{{Session::get('success')}}</div>
+              @endif
+              @if(Session::has('fail'))
+              <div class="alert alert-danger">{{Session::get('fail')}}</div>
+              @endif
+              @csrf
               <div class="input-label">
-                <input placeholder="" email type="email" class="input-text rounded-pill border border-dark">
+                <input placeholder="" email type="email" name="email" value="{{old('email')}}" class="input-text rounded-pill border border-dark" required>
+                <span class="test-danger">@error('email') {{$message}} @enderror</span>
                 <label for="mon-input">Email :</label>
+                
               </div>
               <div class="input-label">
-              <input placeholder="" type="password" class="input-text rounded-pill border border-dark">
+              <input placeholder="" type="password" name="password" class="input-text rounded-pill border border-dark" required>
                 <label for="mon-input">Mot de passe :</label>
+                <span class="test-danger">@error('password') {{$message}} @enderror</span>
               </div>
               <input type="submit" value="Se connecter" class="input-submit">
             </form>

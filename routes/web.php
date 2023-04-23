@@ -6,6 +6,7 @@ use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,15 @@ use App\Http\Controllers\CommentController;
 */
 
 Route::get('/',[StaticController::class,'index']);
-Route::get('/login',[StaticController::class,'login']);
+Route::get('/login',[AuthController::class,'login'])->middleware('alreadyLoggedIn');
+Route::get('/login',[AuthController::class,'registration'])->middleware('alreadyLoggedIn');
+Route::post('/registerUser',[AuthController::class,'registerUser'])->name('registerUser');
+Route::post('/loginUser',[AuthController::class,'loginUser'])->name('loginUser');
+Route::get('/profile',[AuthController::class,'profile'])->middleware('isLoggedIn');
+Route::put('/profile',[AuthController::class,'update_profile'])->name('update_profile');
+Route::get('/logout',[AuthController::class,'logout']);
+
+//Route::get('/login',[StaticController::class,'login']);
 Route::get('/annonces',[AnnonceController::class,'showAnnonces']);
 Route::get('/depotAnnonces',[AnnonceController::class,'depot']);
 Route::get('/detail',[AnnonceController::class,'details']);
