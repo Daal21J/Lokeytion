@@ -80,7 +80,7 @@
                 <tr>
                         @foreach($clients[$j] as $client)
                          @if($client['id'] == $demande->id_client)
-                        <td> <img src="{{url('images/profile-pic.jpg')}}" alt="">{{ $client['nom']." " }}{{ $client['prenom'] }}</td>
+                        <td> <img src="{{url('images/profile-pic.jpg')}}" alt="">{{ $client['nom'] }}</td>
                          @endif
                         
                        

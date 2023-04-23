@@ -30,19 +30,22 @@
                         </div>
                         <div class="form-item">
                             <label for="name">Nom complet</label>
+                            <label>{{$data->nom}}</label>
                             <input type="text"  id="name" placeholder="name">
                             
                         </div>
 
                         <div class="form-item">
                             <label for="email">Email</label>
+                            <label>{{$data->email}}</label>
                             <input type="email" id="floatingInput" placeholder="name@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                             
                         </div>
 
                         <div class="form-item">
                             <label for="tel">Numéro de téléphone</label>
-                            <input type="text" id="floatingInput" placeholder="0612345678" pattern="[0-9]{10}">
+                            <label>{{$data->tel}}</label>
+                            <input type="text" id="floatingInput" placeholder="0666666666" pattern="[0-9]{10}">
                             
                         </div>
 
@@ -51,6 +54,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                     <button type="button" class="btn btn-primary">Modifier</button>
+                    <button type="button" class="btn btn-primary"><a href="logout">Logout</a></button>
                 </div>
             </div>
         </div>

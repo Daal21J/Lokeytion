@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Http\Controllers\UserController;
+use Session;
 
 
 class DemandeController extends Controller
@@ -21,50 +22,54 @@ class DemandeController extends Controller
         
         $i=0;
         $j=0;
-        $annonces = Annonce::where('id_user', '=', '2')->get();
-        foreach($annonces as $annonce){
-            $temp = $annonce['id'];
-            $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
+        $annonces = Annonce::where('id_user', '=', Session::get('loginID'))->get();  
+        $clients=array();
+        if (count($annonces)>0){
+            foreach($annonces as $annonce){
+                $temp = $annonce['id'];
+                $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
+                if(count($demandes[$i]) >0){
+                    foreach($demandes[$i] as $demande){
+                $date1 = Carbon::parse( $demande->created_at);
+                $date2 = Carbon::now();
+                $diffInDays = $date1->diff($date2)->d;
+               
+                if($diffInDays >= 1 ){
+                    $demande->etat = 'Expirée';
+                    $demande->save();
+                    $dmd = $demande->id;
+                    $notif = Notification::create([
+                        'id_user' => $temp,
+                        'id_demande' => $dmd,
+                        'msg' => ' Votre demande a Expirée ',
+                        'etat' => 'non lu'
+                    ]);
+                $notif->save();
+                }
+                    }
+                }
+                $i++;
+            }
+            $i=0;
+           
+            foreach($annonces as $annonce){
+                $temp = $annonce['id'];
+                $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->get();
+                $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
             if(count($demandes[$i]) >0){
                 foreach($demandes[$i] as $demande){
-            $date1 = Carbon::parse( $demande->created_at);
-            $date2 = Carbon::now();
-            $diffInDays = $date1->diff($date2)->d;
-           
-            if($diffInDays >= 1 ){
-                $demande->etat = 'Expirée';
-                $demande->save();
-                $dmd = $demande->id;
-                $notif = Notification::create([
-                    'id_user' => $temp,
-                    'id_demande' => $dmd,
-                    'msg' => ' Votre demande a Expirée ',
-                    'etat' => 'non lu'
-                ]);
-            $notif->save();
-            }
+                    $temp2 = $demande['id_client'] ;
+                    $clients[$j] = User::where('id', '=', $temp2)->get(); 
+                    $j++;
                 }
             }
             $i++;
         }
-        $i=0;
-        $demandes=array();
-        foreach($annonces as $annonce){
-            $temp = $annonce['id'];
-            $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->get();
-            $demandes[$i] = Demande::where('id_annonce', '=', $temp)->where('etat', '=', 'en cours')->get();
-        if(count($demandes[$i]) >0){
-            foreach($demandes[$i] as $demande){
-                $temp2 = $demande['id_client'] ;
-                $clients[$j] = User::where('id', '=', $temp2)->get(); 
-                $j++;
-            }
         }else {
-            $clients=array();
+            $demandes=array();
+            $objets=array();
         }
-           
-        $i++;
-    }
+        
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
     }
 
@@ -111,15 +116,15 @@ class DemandeController extends Controller
                     $givenDay = $parts[$i]; // The given day
                     $today = Carbon::today(); // Get today's date
                     $dayOfWeek = $today->dayOfWeek;
-            $dayMap = [
-                'dimanche' => 0,
-                'lundi' => 1,
-                'mardi' => 2,
-                'mercredi' => 3,
-                'jeudi' => 4,
-                'vendredi' => 5,
-                'samedi' => 6,
-            ];
+                    $dayMap = [
+                    'dimanche' => 0,
+                    'lundi' => 1,
+                    'mardi' => 2,
+                    'mercredi' => 3,
+                    'jeudi' => 4,
+                    'vendredi' => 5,
+                    'samedi' => 6,
+                    ];
                    $givenDayNumber = $dayMap[strtolower($givenDay)];
                    $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
                    $emaildays = 0;
@@ -143,8 +148,11 @@ class DemandeController extends Controller
         ]);
         $notif->save();
         $temp = $demande->id_client;
+        $user = User::find(Session::get('loginID'));
         $client = User::find($temp);
-        Mail::to($client->email)->send(new SendMail($client,$annonces));
+        Mail::to($user->email)->send(new SendMail($client,$annonces)); 
+       // Mail::to($client->email)->send(new FormMail($annonces,$linkproprietaire));  //add delay
+       // Mail::to($user->email)->send(new FormMail($annonces,$linkclient));   //add delay 
         return  redirect()->route('Demande.show');
     }
 
@@ -155,7 +163,7 @@ class DemandeController extends Controller
         $clients=array();
         $demandes=array();
         $objets=array();
-        $annonces = Annonce::where('id_user', '=', '1')->where('titre', 'like', '%'.$dmd->keyword.'%' )->get();
+        $annonces = Annonce::where('id_user', '=', Session::get('loginID'))->where('titre', 'like', '%'.$dmd->keyword.'%' )->get();
         if(count($annonces)>0){
             foreach($annonces as $annonce){
                 $temp = $annonce['id'];
@@ -175,7 +183,7 @@ class DemandeController extends Controller
     }
         }else {
             
-            $annonces = Annonce::where('id_user', '=', '2')->get();
+            $annonces = Annonce::where('id_user', '=', Session::get('loginID'))->get();
             foreach($annonces as $annonce){
                 $temp = $annonce['id'];
                 $objets[$i] = Objet::where('id', '=', $annonce['id_objet'])->where('categorie', 'like','%'.$dmd->keyword.'%' )->get();
