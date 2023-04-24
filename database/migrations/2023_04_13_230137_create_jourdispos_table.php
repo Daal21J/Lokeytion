@@ -19,6 +19,7 @@ class CreateJourdisposTable extends Migration
             $table->string('jour');
             $table->string('de');
             $table->string('a');
+            $table->date('reserved_for');
             $table->string('etat');
             $table->timestamps();
         });

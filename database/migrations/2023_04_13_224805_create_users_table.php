@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('prenom');
             $table->string('email')->unique();
             $table->string('mdp');
-            $table->string('ville');
-            $table->string('role');
-            $table->string('photo');
+            $table->string('ville')->nullable()->change();
+            $table->string('role')->nullable()->change();
+            $table->string('photo')->nullable()->change();
             $table->timestamps();
         });
     }

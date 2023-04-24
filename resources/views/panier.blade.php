@@ -32,85 +32,49 @@
             </div>
             <div class="scroll-container">
                 <ul class="listCard">
+                @foreach($panier as $item)
+                    <li>
+                        @foreach($annonces as $annonce)
+                        @if($item['id_annonce'] == $annonce['id'])
 
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div class="name">Product title 1 Product title 1 Product title 1 Product title 1 Product title
-                            1 Product title 1</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div>Product title 2</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div>Product title 3</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div>Product title 4</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
-                    
-                    
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div>Product title 6</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div>Product title 7</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
-                    <li>
-                        <div><img src="images/test.jpg" /></div>
-                        <div>Product title 8</div>
-                        <div>220.00</div>
-                        <div>
-                            <button class="louer" name="louer">Louer</button>
-                            <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
-                        </div>
-                    </li>
-                    <hr>
 
+                        @foreach($objets as $objet)
+                        @if($annonce['id_objet'] == $objet['id'])
+
+                        <div><img src="{{ $objet['image1'] }}" /></div>
+
+                        @endif
+                        @endforeach
+
+
+
+                        <div class="name">{{ $annonce['titre'] }}</div>
+                            <div>{{ number_format($annonce['prix'],2) }}</div>
+                        @endif
+                        @endforeach
+                        <div>
+                        <form action="{{ route('panier.delete', $item['id']) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button class="SupprimerPanier" name="SupprimerPanier"><i class="bi bi-trash"></i></button>
+                        </form>
+                        <form action="{{ route('demande.store', $item['id_annonce']) }}" method="POST">
+                           @csrf
+                           <input type="hidden" name="id_client" value=1>
+                           <input type="hidden" name="id" value="{{ $item['id'] }}">
+                           <input type="hidden" name="id_annonce" value="{{ $item['id_annonce'] }}">
+                           <button type='submit' class="louer" name="louer">Louer</button>
+                        </form>
+                        </div>
+                    </li>
+                @endforeach
+                   
+
+                <hr>
                 </ul>
             </div>
             <div class="checkOut">
-                <div class="total"><h3>Total :  12000.00</h3></div>
+                <div class="total"><h3>Total : {{ number_format($prixTotal, 2) }}</h3></div>
             </div>
         </div>
 
