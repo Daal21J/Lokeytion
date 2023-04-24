@@ -42,7 +42,7 @@ class DemandeController extends Controller
                         'id_user' => $temp,
                         'id_demande' => $dmd,
                         'msg' => ' Votre demande a Expirée ',
-                        'etat' => 'non lu'
+                        'etat' => 'unread'
                     ]);
                 $notif->save();
                 }
@@ -90,7 +90,7 @@ class DemandeController extends Controller
                 'id_user' => $temp,
                 'id_demande' => $dmd,
                 'msg' => ' Votre demande est refusée ',
-                'etat' => 'non lu'
+                'etat' => 'unread'
             ]);
         $notif->save();
 
@@ -144,7 +144,7 @@ class DemandeController extends Controller
             'id_user' => $temp,
             'id_demande' => $dmd,
             'msg' => ' Votre demande est Acceptée ',
-            'etat' => 'non lu'
+            'etat' => 'unread'
         ]);
         $notif->save();
         $temp = $demande->id_client;
