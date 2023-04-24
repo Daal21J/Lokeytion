@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Annonce extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'description',
+        'status',
+        // add any other attributes you want to allow for mass assignment
+    ];
 }

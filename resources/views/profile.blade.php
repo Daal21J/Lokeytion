@@ -20,37 +20,53 @@
                     <i class="fa-solid fa-xmark " data-bs-dismiss="modal"></i>
                 </div>
                 <div class="modal-body">
-                    <form method="post">
+                    <form method="post" action="{{route('update_profile',['id'=> $data->id])}}" enctype="multipart/form-data">
+                    @csrf
+                    @if(Session::has('status'))
+                    <div class="alert alert-success">{{Session::get('status')}}</div>
+                    @endif
+                    @if(Session::has('fail'))
+                    <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                    @endif
+                    @csrf
+                    @method('PUT')
                         <div class="upload">
-                            <img src="images/profile-pic.jpg" width=130 height=130 alt="">
+                            <img src="{{ asset('images/users/'.(file_exists(public_path('images/users/'.$data->photo))? $data->photo : 'profile-pic.png')) }}" width=130 height=130 alt="">
                             <div class="round">
-                                <input type="file">
+                                <input class="form-control form-control-sm" name="photo" id="photo" type="file">
                                 <i class="fa fa-camera"></i>
                             </div>
                         </div>
+                        
                         <div class="form-item">
                             <label for="name">Nom complet</label>
-                            <input type="text"  id="name" placeholder="name">
+                            <label>{{$data['nom']}}</label>
+                            <input type="text" name="nom" id="name" value="{{$data->nom}}" placeholder="name">
                             
                         </div>
 
                         <div class="form-item">
                             <label for="email">Email</label>
-                            <input type="email" id="floatingInput" placeholder="name@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                            <label>{{$data['email']}}</label>
+                            <input type="email" name="email" id="floatingInput" value="{{$data->email}}" placeholder="name@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                             
                         </div>
 
                         <div class="form-item">
-                            <label for="tel">Numéro de téléphone</label>
-                            <input type="text" id="floatingInput" placeholder="0612345678" pattern="[0-9]{10}">
+                            <label for="tel"></label>
+                            <label>{{$data['tel']}}</label>
+                            <input type="text" name="tel" id="floatingInput" value="{{$data->tel}}" placeholder="06xxxxxxxx" pattern="[0-9]{10}">
                             
                         </div>
-
+                        <div class="modal-footer">
+                         <button type="submit" class="input-submit">Modifier</button>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary">Modifier</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">fermer</button>
+                    
+                    <button type="button" class="btn btn-primary"><a href="{{route('logout',['id'=> $data->id])}}">Logout</a></button>
                 </div>
             </div>
         </div>

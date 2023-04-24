@@ -62,6 +62,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/login">CONNEXION</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#contactus">CONTACTEZ-NOUS</a>
@@ -112,7 +115,7 @@
 
         </section>
         <div class="text-center mt-4">
-            <a href="login.php"><button class="myBtn">Commencez par un simple clic !</button></a>
+            <a href="/login"><button class="myBtn">Commencez par un simple clic !</button></a>
         </div>
         <section class="hero d-flex align-items-center" id="about" style="height:fit-content; background-color:#efe9ea; padding-bottom: 80px; ">
             <div class="container d-flex justify-content-center">
