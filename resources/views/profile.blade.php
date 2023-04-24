@@ -20,7 +20,7 @@
                     <i class="fa-solid fa-xmark " data-bs-dismiss="modal"></i>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{route('update_profile')}}" enctype="multipart/form-data">
+                    <form method="post" action="{{route('update_profile',['id'=> $data->id])}}" enctype="multipart/form-data">
                     @if(Session::has('status'))
                     <div class="alert alert-danger">{{Session::get('status')}}</div>
                     @endif
@@ -65,7 +65,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">fermer</button>
                     
-                    <button type="button" class="btn btn-primary"><a href="logout">Logout</a></button>
+                    <button type="button" class="btn btn-primary"><a href="{{route('logout',['id'=> $data->id])}}">Logout</a></button>
                 </div>
             </div>
         </div>

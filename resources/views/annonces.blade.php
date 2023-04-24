@@ -32,7 +32,8 @@
                 <button class="Vous_Voulez">Voulez-vous ...</button>
               </div>
               <br /><br />
-              <form  >
+              <form action="{{route('chercher',['id'=> $data->id])}}" method="post">
+              @csrf
                 <div class="row">
                   <div class="col-md-4">
                     <div class="product-short">
@@ -41,15 +42,14 @@
                         <select class="form-select" aria-label="Default select example">
                           <div class="dropdown">
                             <div class="dropdown-menu dropdown-menu-right">
-                              <option value="">
-                                <a href="#" class="dropdown-item">Newest</a>
-                              </option>
-                              <option value="">
-                                <a href="#" class="dropdown-item">Popular</a>
-                              </option>
-                              <option value="">
-                                <a href="#" class="dropdown-item">Most sale</a>
-                              </option>
+                            <option selected disabled>Catégorie</option>
+                            <option value="sport">Sport</option>
+                            <option value="electroniaue">Electronique</option>
+                            <option value="articles_maison">Articles maison</option>
+                            <option value="vetements_accessoires">Vetements et Accessoires</option>
+                            <option value="instruments">Instruments</option>
+                            <option value="livres_medias">Livres et medias</option>
+                            
                             </div>
                           </div>
                         </select>
@@ -61,9 +61,10 @@
                     <div class="product-search">
                       <div class="input-group">
                         <div class="form-floating mb-3">
-                          <input type="text" id="floatingInput" placeholder="Ville" class="form-control">
+                          <input type="text" id="floatingInput" placeholder="Ville" name="ville" class="form-control">
                           <label for="floatingInput">Ville</label>
                         </div>
+                        
                         <div class="input-group-text">
                           <i class="fa fa-building"></i>
                         </div>
@@ -76,9 +77,10 @@
                     <div class="product-search">
                       <div class="input-group">
                         <div class="form-floating mb-3">
-                          <input type="text" id="floatingInput" placeholder="Ville" class="form-control">
+                          <input type="text" id="floatingInput" placeholder="Ville" name="prix" class="form-control">
                           <label for="floatingInput">Prix</label>
                         </div>
+                       
                         <div class="input-group-text">
                           DH
                         </div>
@@ -100,11 +102,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-2">
-                    <div class="product-mois">
-                      <input type="time" class="form-control" id="heureDebut" name="heureDebut" class="dateDebut" />
-                    </div>
-                  </div>
+ 
                   <div class="col-md-1"></div>
 
                   À:
@@ -114,19 +112,14 @@
                     </div>
                   </div>
 
-                  <div class="col-md-2">
-                    <div class="product-mois">
-                      <input type="time" class="form-control" id="heureFin" name="heureFin" class="dateFin" />
-                    </div>
-                  </div>
                   <br /><br /><br /> <br>
                 </div>
                 <div class="text-center">
                   <button>
                     <i class="fa fa-trash"></i> Effacer
                   </button>
-                  <button>
-                    <i class="fa fa-search"></i> Recherche
+                  <button type="submit" class="input-submit">
+                     Recherche
                   </button>
                 </div>
               </form>
@@ -140,10 +133,15 @@
           </div>
 
 
-          <div class="col-md-4">
+          
+          
+          @if (count($annonce_display) > 0)
+            @foreach ($annonce_display as $annonce)
+            <div class="col-md-4">
             <div class="product-item">
+            <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()}}</p>
               <div class="product-title">
-                <a href="#">Product Name</a>
+                <a href="#">{{$annonce->titre}}</a>
                 <div class="ratting">
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
@@ -153,23 +151,30 @@
                 </div>
               </div>
               <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
+                <a href="#">
+                <img src="{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}" width=130 height=130 alt="Product Image">
+                  
                 </a>
                 <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
+                  <button onclick="showModal('{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}')"><i class="fa fa-search-plus"></i></button>
                 </div>
               </div>
               <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn" href=""><i class="fa fa-plus-circle"></i>Lire plus</a>
+                <h3>{{$annonce->prix}}<span>DH</span> &nbsp &nbsp {{$annonce->ville}}</h3>
+                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
+              <a class="btn" href=""><i class="fas fa-edit"></i></a>
               </div>
             </div>
-          </div>
-          <div class="col-md-4">
+            </div>
+
+            @endforeach
+            @elseif (!is_null($annonce_display) && count($annonce_display) > 0)
+            
+            @foreach ($annonce_display as $annonce)
             <div class="product-item">
+            <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()}}</p>
               <div class="product-title">
-                <a href="#">Product Name</a>
+                <a href="#">{{$annonce->titre}}</a>
                 <div class="ratting">
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
@@ -179,123 +184,28 @@
                 </div>
               </div>
               <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
+                <a href="#">
+                <img src="{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}" width=130 height=130 alt="Product Image">
+                  
                 </a>
                 <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
+                  <button onclick="showModal('{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}')"><i class="fa fa-search-plus"></i></button>
                 </div>
               </div>
               <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn" href=""><i class="fa fa-plus-circle"></i>Lire plus</a>
+                <h3><span>Ville:</span>{{$annonce->ville}}<span>DH</span>{{$annonce->prix}}</h3>
+                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
+              <a class="btn" href=""><i class="fas fa-edit"></i></a>
               </div>
+              
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn" href=""><i class="fa fa-plus-circle"></i>Lire plus</a>
-              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn" href=""><i class="fa fa-plus-circle"></i>Lire plus</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn" href=""><i class="fa fa-plus-circle"></i>Lire plus</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn" href=""><i class="fa fa-plus-circle"></i>Lire plus</a>
-              </div>
-            </div>
-          </div>
+             
+            
+            @endforeach
+              @else
+              <h1 style="justify-content:center;" class="display-1">pas d'annonces pour l'instant</h1>
+              @endif 
         </div>
         <!-- Pagination Start -->
         <div class="col-md-12">

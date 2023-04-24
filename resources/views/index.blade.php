@@ -62,6 +62,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/login">CONNEXION</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#contactus">CONTACTEZ-NOUS</a>

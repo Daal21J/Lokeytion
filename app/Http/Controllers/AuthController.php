@@ -45,7 +45,8 @@ class AuthController extends Controller
         if($user){
             if(Hash::check($request->password,$user->password)){
                 $request->session()->put('loginID',$user->id);
-                return redirect('profile');
+                return redirect()->route('annonces',['id' => $user->id,]);
+                
             }else{
                 return back()->with('fail','Error Password !!');
             }
@@ -53,10 +54,16 @@ class AuthController extends Controller
             return back()->with('fail','This email is not registered !!');
         }
     }
-    public function profile(){
+    /**public function profile(){
         $data =array();
         if(Session::has('loginID')){
             $data = User::where('id','=',Session::get('loginID'))->first();
+        }else{
+            $data = [
+                'email' => 'john@example.com',
+                'nom' => 'John Doe',
+                'tel' => '0555555555'
+            ];
         }
         return view('profile',['data' => $data]);
     }
@@ -95,7 +102,7 @@ class AuthController extends Controller
             //return back()->with('status','Modification réussi !');
             //return redirect()->route('profile')->with('status','Modification réussi !');
         
-    }
+    }*/
 
 
 
@@ -103,7 +110,7 @@ class AuthController extends Controller
     public function logout(){
         if(Session::has('loginID')){
             Session::pull('loginID');
-            return redirect('/');
+            return redirect('login');
         }
     }
 

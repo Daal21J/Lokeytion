@@ -33,10 +33,14 @@
           </div>
 
 
+          
           <div class="col-md-4">
+          @if (count($annonce_display) > 0)
+            @foreach ($annonce_display as $annonce)
             <div class="product-item">
+            <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()  }}</p>
               <div class="product-title">
-                <a href="#">Product Name</a>
+                <a href="#">{{$annonce->titre}}</a>
                 <div class="ratting">
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
@@ -46,156 +50,30 @@
                 </div>
               </div>
               <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
+                <a href="#">
+                <img src="{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}" width=130 height=130 alt="Product Image">
+                  
                 </a>
                 <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
+                  <button onclick="showModal('{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}')"><i class="fa fa-search-plus"></i></button>
                 </div>
               </div>
               <div class="product-price">
-                <h3><span>$</span>99</h3>
+                <h3><span>DH</span>{{$annonce->prix}}</h3>
                 <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
               <a class="btn" href=""><i class="fas fa-edit"></i></a>
               </div>
+              
             </div>
+            @endforeach
+            @else
+             <h1 class="display-1">pas d'annonces pour l'instant</h1>
+              @endif
           </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <div class="product-title">
-                <a href="#">Product Name</a>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div>
-              </div>
-              <div class="product-image">
-                <a href="product-detail.html">
-                  <img src="images/test.jpg" alt="Product Image" />
-                </a>
-                <div class="product-action">
-                  <button onclick="showModal('images/test.jpg')"><i class="fa fa-search-plus"></i></button>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3><span>$</span>99</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
+          
+          
+          
+          
         <!-- Pagination Start -->
         <div class="col-md-12">
           <br /><br />

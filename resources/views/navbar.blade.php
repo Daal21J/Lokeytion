@@ -34,15 +34,15 @@
           <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item nav-items">
-                <a class="nav-link nav-links" ria-current="page" href="/MesAnnonces">
+                <a class="nav-link nav-links" ria-current="page" href="{{route('mesannonces',['id'=> $data->id])}}">
                   Mes annonces
                 </a>
               </li>
               <li class="nav-item nav-items">
-                <a class="nav-link nav-links" href="/annonces">Accueil</a>
+                <a class="nav-link nav-links" href="{{route('annonces',['id'=> $data->id])}}">Accueil</a>
               </li>
               <li class="nav-item nav-items">
-                <a class="nav-link nav-links" href="/depotAnnonces">Déposer une annonce</a>
+                <a class="nav-link nav-links" href="{{route('depot',['id'=> $data->id])}}">Déposer une annonce</a>
               </li>
 
             </ul>
@@ -106,7 +106,7 @@
                 </li>
                 <hr />
                 <li class="profile-dropdown-list-item">
-                  <a href="index1.php">
+                  <a href="{{route('logout')}}">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     Se déconnecter
                   </a>
