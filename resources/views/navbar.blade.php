@@ -83,7 +83,7 @@
                 <div class="profile-img">
                   <i class="fa-solid fa-circle"></i>
                 </div>
-                <span>Name
+                <span>
                   <i class="fa-solid fa-angle-down"></i>
                 </span>
               </div>

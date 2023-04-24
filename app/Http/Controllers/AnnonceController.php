@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
 {
-    public function showAnnonces(){
-        return view('annonces');
-    }
+   
 
     public function depot(){
         return view('depotAnnonce');
