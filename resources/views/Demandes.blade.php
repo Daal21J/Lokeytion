@@ -63,7 +63,7 @@
                         <th> Categorie <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Prix <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Ville<span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Jour dereservation<span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Jour de reservation<span class="icon-arrow">&UpArrow;</span></th>
                         <th> Action <span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
                     

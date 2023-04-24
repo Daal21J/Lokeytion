@@ -104,41 +104,10 @@ class DemandeController extends Controller
         $temp = $demande->id_client;
         $demande->etat = 'Acceptée';
         $demande->save();
-        $parts = explode(",", $demande->jour_reservation);
         $annonce = $demande->id_annonce;
         $annonces = Annonce::find($annonce);
         $annonces->status = "active";
         $annonces->save(); 
-        $jours = JourDispo::where('id_annonce', '=',$annonce )->get();
-        foreach($jours as $day){
-            for($i=0 ; $i<count($parts);$i++){
-                if($parts[$i] == $day->jour){
-                    $givenDay = $parts[$i]; // The given day
-                    $today = Carbon::today(); // Get today's date
-                    $dayOfWeek = $today->dayOfWeek;
-                    $dayMap = [
-                    'dimanche' => 0,
-                    'lundi' => 1,
-                    'mardi' => 2,
-                    'mercredi' => 3,
-                    'jeudi' => 4,
-                    'vendredi' => 5,
-                    'samedi' => 6,
-                    ];
-                   $givenDayNumber = $dayMap[strtolower($givenDay)];
-                   $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
-                   $emaildays = 0;
-                   if($daysUntilNextDay > $emaildays){
-                    $emaildays = $daysUntilNextDay;
-                   }
-                   $nextDay = $today->copy()->addDays($daysUntilNextDay);
-                   $nextDayFormatted = $nextDay->format('Y-m-d');
-                   $day->reserved_for = $nextDayFormatted;
-                   $day->etat = 'reserve';
-                   $day->save();
-                }
-            }
-        }
         $temp = $demande->id_client;
         $notif = Notification::create([
             'id_user' => $temp,
