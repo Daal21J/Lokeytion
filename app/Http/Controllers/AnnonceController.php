@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Session;
 use Illuminate\Support\Facades\DB;
+use App\Models\Annonce;
 
 class AnnonceController extends Controller
 {
-    public function showAnnonces($id){
+    /*public function showAnnonces($id){
         $data = User::findOrFail($id);
 
         $annonce_display = DB::table('annonces')
@@ -18,14 +19,47 @@ class AnnonceController extends Controller
                         ->get();
         
         return view('annonces',['data'=>$data,'annonce_display'=>$annonce_display]);
+    }*/
+    public function showAnnonces($id){
+        $data = User::findOrFail($id);
+    
+        DB::table('annonces')
+            ->where('a', '<', now()->toDateString())
+            ->update(['status' => 'non']);
+    
+        $annonce_display = DB::table('annonces')
+                        ->where('status','=','oui')
+                        ->latest()
+                        ->get();
+        
+        return view('annonces',['data'=>$data,'annonce_display'=>$annonce_display]);
     }
+    
+    
+    public function mesannonces($id){
+        $data = User::findOrFail($id);
+    
+        DB::table('annonces')
+            ->where('id_user','=',$data->id)
+            ->where('a', '<', now()->toDateString())
+            ->update(['status' => 'non']);
+    
+        $annonce_display = DB::table('annonces')
+                        ->where('id_user','=',$data->id)
+                        ->where('status','=','oui')
+                        ->latest()
+                        ->get();
+    
+        return view('MesAnnonces',['data'=>$data,'annonce_display'=>$annonce_display]);
+    }
+    
 
     public function depot($id){
         $data = User::findOrFail($id);
         return view('depotAnnonce',['data'=>$data,]);
     }
 
-    public function mesannonces($id){
+    /*public function mesannonces($id){
         $data = User::findOrFail($id);
         $annonce_display = DB::table('annonces')
                         ->where('id_user','=',$data->id)
@@ -34,7 +68,7 @@ class AnnonceController extends Controller
                         ->get();
 
         return view('MesAnnonces',['data'=>$data,'annonce_display'=>$annonce_display]);
-    }
+    }*/
     public function details(){
         return view('Product_details');
     }
@@ -87,7 +121,7 @@ class AnnonceController extends Controller
             $result=$data->save();
             if($result){
                 //return view('profile', ['data' => $data])->with('status','Modification réussi !');
-                return redirect()->route('profile', ['data' => $data])->with('status','Modification réussi !');
+                return redirect()->route('annonces', ['id' => $data->id])->with('status','Modification réussie !');
             }else{
                 return back()->with('fail','Something wrong');
             }
@@ -130,15 +164,35 @@ public function chercher(Request $request,$id){
 
     $prix = $request->input('prix') ? $request->input('prix')[0] : null;
     $ville = $request->input('ville') ? $request->input('ville')[0] : null;
+    $cat = $request->input('categorie') ? $request->input('categorie')[0] : null;
+    $dateDebut = $request->input('dateDebut') ? $request->input('dateDebut')[0] : null;
+    $dateFin = $request->input('dateFin') ? $request->input('dateFin')[0] : null;
 
     $query = DB::table('annonces')
     ->where('status', '=', 'oui');
     if ($prix) {
-        $query->where('prix', '=',$request->input('prix'));
+        $tab = explode(" ",$prix);
+        $prix_min = $tab[0];
+        $prix_max = $tab[1];
+        $query->where('prix', '>=', $prix_min);
+        $query->where('prix', '<', $prix_max);
     }
     if ($ville) {
         $query->where('ville', '=', $request->input('ville'));
     }
+    if ($cat) {
+        $query->where('categorie', '=', $request->input('categorie'));
+    }
+    if($request->input('dateDebut')){
+        $dateDebut = date('Y-m-d', strtotime($request->input('dateDebut')));
+        $query->where('de', '<=', $dateDebut);
+    }
+    
+    if($request->input('dateFin')){
+        $dateFin = date('Y-m-d', strtotime($request->input('dateFin')));
+        $query->where('a', '>=', $dateFin);
+    }
+    
 
     $annonce_display = $query->get();
 
@@ -148,6 +202,16 @@ public function chercher(Request $request,$id){
         'data' => $data,
         'annonce_display' => $annonce_display ?? null
     ]);            
+}
+
+public function destroy($id)
+{
+    $annonce = Annonce::findOrFail($id);
+    $annonce->status = 'non';
+    $annonce->save();
+
+    return redirect()->route('mesannonces', ['id' => $annonce->id_user]) 
+                     ->with('success', 'Announcement status updated successfully');
 }
 
 

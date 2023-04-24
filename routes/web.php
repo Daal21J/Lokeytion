@@ -32,6 +32,7 @@ Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 //Route::get('/annonces',[AnnonceController::class,'index'])->name('annonces');
 Route::get('/annonces/{id}',[AnnonceController::class,'showAnnonces'])->middleware('isLoggedIn')->name('annonces');
 Route::post('/recherche/{id}',[AnnonceController::class,'chercher'])->name('chercher');
+Route::delete('/MesAnnonces/{id}', [AnnonceController::class,'destroy'])->name('destroy');
 Route::get('/depotAnnonces/{id}',[AnnonceController::class,'depot'])->name('depot');
 Route::get('/detail',[AnnonceController::class,'details']);
 Route::get('/MesAnnonces/{id}',[AnnonceController::class,'mesannonces'])->name('mesannonces');

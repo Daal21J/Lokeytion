@@ -38,13 +38,13 @@
                   <div class="col-md-4">
                     <div class="product-short">
                       <div class="input-group">
-                        <span class="input-group-text" id="basic-addon3">Categorie</span>
-                        <select class="form-select" aria-label="Default select example">
+                        <span class="input-group-text" name="categorie" id="basic-addon3">Categorie</span>
+                        <select class="form-select" aria-label="Default select example" name="categorie">
                           <div class="dropdown">
                             <div class="dropdown-menu dropdown-menu-right">
-                            <option selected disabled>Catégorie</option>
+                            <option selected disabled >Catégorie</option>
                             <option value="sport">Sport</option>
-                            <option value="electroniaue">Electronique</option>
+                            <option value="electronique">Electronique</option>
                             <option value="articles_maison">Articles maison</option>
                             <option value="vetements_accessoires">Vetements et Accessoires</option>
                             <option value="instruments">Instruments</option>
@@ -77,13 +77,15 @@
                     <div class="product-search">
                       <div class="input-group">
                         <div class="form-floating mb-3">
-                          <input type="text" id="floatingInput" placeholder="Ville" name="prix" class="form-control">
-                          <label for="floatingInput">Prix</label>
+                          <select class="form-select form-select-lg m-2" name="prix[]">
+                          <option selected disabled>Prix</option>
+                           <option value="20.000 50.000">20-50 (DH)</option>
+                         <option value="50.000 100.000">50-100 (DH)</option>
+                           <option value="100.000 500.000">100-500 (DH)</option>
+                          </select>
+                          
                         </div>
                        
-                        <div class="input-group-text">
-                          DH
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -108,7 +110,7 @@
                   À:
                   <div class="col-md-2">
                     <div class="product-date">
-                      <input type="date" id="dateDebut" name="dateDebut" class="dateFin" />
+                      <input type="date" id="dateFin" name="dateFin" class="dateFin" />
                     </div>
                   </div>
 
@@ -137,9 +139,9 @@
           
           @if (count($annonce_display) > 0)
             @foreach ($annonce_display as $annonce)
-            <div class="col-md-4">
+          <div class="col-md-4">
             <div class="product-item">
-            <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()}}</p>
+               <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()}}</p>
               <div class="product-title">
                 <a href="#">{{$annonce->titre}}</a>
                 <div class="ratting">
@@ -161,8 +163,7 @@
               </div>
               <div class="product-price">
                 <h3>{{$annonce->prix}}<span>DH</span> &nbsp &nbsp {{$annonce->ville}}</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
+    
               </div>
             </div>
             </div>
@@ -194,8 +195,6 @@
               </div>
               <div class="product-price">
                 <h3><span>Ville:</span>{{$annonce->ville}}<span>DH</span>{{$annonce->prix}}</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
               </div>
               
             </div>

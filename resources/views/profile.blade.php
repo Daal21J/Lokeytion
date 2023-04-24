@@ -21,8 +21,9 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{route('update_profile',['id'=> $data->id])}}" enctype="multipart/form-data">
+                    @csrf
                     @if(Session::has('status'))
-                    <div class="alert alert-danger">{{Session::get('status')}}</div>
+                    <div class="alert alert-success">{{Session::get('status')}}</div>
                     @endif
                     @if(Session::has('fail'))
                     <div class="alert alert-danger">{{Session::get('fail')}}</div>

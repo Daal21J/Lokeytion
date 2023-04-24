@@ -34,11 +34,12 @@
 
 
           
-          <div class="col-md-4">
-          @if (count($annonce_display) > 0)
+          
+            @if (count($annonce_display) > 0)
             @foreach ($annonce_display as $annonce)
+          <div class="col-md-4">
             <div class="product-item">
-            <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()  }}</p>
+              <p> {{ \Carbon\Carbon::parse($annonce->created_at)->diffForHumans()  }}</p>
               <div class="product-title">
                 <a href="#">{{$annonce->titre}}</a>
                 <div class="ratting">
@@ -51,7 +52,7 @@
               </div>
               <div class="product-image">
                 <a href="#">
-                <img src="{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}" width=130 height=130 alt="Product Image">
+                   <img src="{{ asset('images/annonces/'.(file_exists(public_path('images/annonces/'.$annonce->photo))? $annonce->photo : 'test.jpg')) }}" width=130 height=130 alt="Product Image">
                   
                 </a>
                 <div class="product-action">
@@ -60,10 +61,21 @@
               </div>
               <div class="product-price">
                 <h3><span>DH</span>{{$annonce->prix}}</h3>
-                <a class="btn mx-2" href=""><i class="fas fa-trash-alt"></i></a>
-              <a class="btn" href=""><i class="fas fa-edit"></i></a>
+                <a class="btn mx-2" href="#" onclick="event.preventDefault();
+        if (confirm('Vous etes sur?')) {
+            document.getElementById('status-form-{{ $annonce->id }}').submit();
+        }">
+    <i class="fas fa-trash-alt"></i>
+</a>
+<form id="status-form-{{ $annonce->id }}" action="{{ route('destroy', $annonce->id) }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+
+                <a class="btn" href=""><i class="fas fa-edit"></i></a>
               </div>
               
+            </div>
             </div>
             @endforeach
             @else
