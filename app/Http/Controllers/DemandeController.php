@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Notification;
 use App\Models\Objet;
 use App\Models\Annonce;
+use App\Models\Panier;
 use App\Models\JourDispo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -19,6 +20,11 @@ class DemandeController extends Controller
 {
     public function showDemande(){
         
+        //set notifications to seen 
+        notification::where('etat', 'unread')
+    ->where('id_user', 2)
+    ->update(['etat' => 'seen']);
+
         $i=0;
         $j=0;
         $annonces = Annonce::where('id_user', '=', '2')->get();
@@ -202,4 +208,7 @@ class DemandeController extends Controller
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
     }
   
+
+
+   
 }

@@ -10,16 +10,7 @@ use App\Models\Annonce;
 
 class AnnonceController extends Controller
 {
-    /*public function showAnnonces($id){
-        $data = User::findOrFail($id);
-
-        $annonce_display = DB::table('annonces')
-                        ->where('status','=','oui')
-                        ->latest()
-                        ->get();
-        
-        return view('annonces',['data'=>$data,'annonce_display'=>$annonce_display]);
-    }*/
+   
     public function showAnnonces($id){
         $data = User::findOrFail($id);
     

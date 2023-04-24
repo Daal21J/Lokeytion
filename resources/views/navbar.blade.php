@@ -46,19 +46,22 @@
               </li>
 
             </ul>
-            <div class="position-relative">
-              <a href="" class="text-decoration-none text-dark">
-                <i class="fa-solid fa-bell nav-icon"></i>
-              </a>
+            <div class="position-relative ">
 
-              <a href="" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-              <i class="fa-solid fa-envelope nav-icon"></i>
-</a>
-                  <!--
+
+            <div class="dropdown text-decoration-none text-dark dropdown-toggle">
+            <a href="{{ route('Demande.show')}}" class="text-decoration-none text-dark dropdown-toggle" role="button" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid fa-bell nav-icon"></i>
+               @include('unreadDemandes')
+                
+            </a>
+            </div>
+             
+                  
               <a href="" class="text-decoration-none text-dark">
                 <i class="fa-solid fa-envelope nav-icon"></i>
               </a>
--->
+
               <a href="/MonPanier" class="text-decoration-none text-dark">
                 <i class="fa-solid fa-cart-arrow-down nav-icon"></i>
               </a>
@@ -80,7 +83,7 @@
                 <div class="profile-img">
                   <i class="fa-solid fa-circle"></i>
                 </div>
-                <span>Name
+                <span>
                   <i class="fa-solid fa-angle-down"></i>
                 </span>
               </div>

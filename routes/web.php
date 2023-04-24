@@ -41,4 +41,16 @@ Route::get('/MesDemandes/Refuse/{id}',[DemandeController::class,'refuse'])->name
 Route::get('/MesDemandes/Accept/{id}',[DemandeController::class,'accept'])->name('Demande.accept');
 Route::get('/MesDemandes/search',[DemandeController::class,'search'])->name('Demande.search');
 Route::get('/MonPanier',[PanierController::class,'showPanier']);
+Route::delete('/Monpanier/{id}', [PanierController::class,'deletePanier'])->name('panier.delete');
+Route::post('/demandes', [PanierController::class,'storeDemande'])->name('demande.store');
+Route::get('/unreadDemandes', function () {
+    return view('unreadDemandes');
+});
 Route::get('/Comment',[CommentController::class,'showComment']);
+
+
+
+/****TEST*****/
+Route::get('/navbar', function () {
+    return view('navbar');
+});
