@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Demande extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['id_client','id_annonce','etat', 'jour_reservation'];
+
 }

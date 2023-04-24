@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyEmail;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\DB;
+
 
 
 class DemandeController extends Controller
@@ -144,7 +146,7 @@ class DemandeController extends Controller
         ]);
         $notif->save();
         
-       // $client = User::find($temp);
+        // $client = User::find($temp);
         //Mail::to('example@example.com')->send(new MyEmail($data));
        
        
@@ -201,5 +203,60 @@ class DemandeController extends Controller
     }
         return view('Demandes',['annonces' => $annonces , 'clients' => $clients ,'demandes' => $demandes , 'objets'=> $objets]);
     }
+
+
+
+
+    public function louer($id, Request $request)
+{
+    $annonce_objet = DB::table('annonces')
+        ->join('objets', 'annonces.id_objet', '=', 'objets.id')
+        ->where('annonces.id', $id)
+        ->first();
+
+    $demande_exist = Demande::where('id_annonce', $annonce_objet->id)
+        ->where('id_client', 2)
+        ->first();
+
+    if (!$demande_exist) {
+        $validatedData = $request->validate([
+            'jours' => 'required|array',
+            'jours.*' => 'required|string',
+        ]);
+
+        $jours = $validatedData['jours'];
+        $jours_str = implode(',', $jours);
+
+        $demande = new Demande;
+        $demande->id_client = 2;
+        $demande->id_annonce = $annonce_objet->id;
+        $demande->etat = 'en cours';
+        $demande->jour_reservation =  $jours_str;
+        $demande->save();
+
+        // Mettre à jour l'état des jours réservés dans la table "jourdispo"
+        $jours_reserves = explode(',', $jours_str);
+        foreach ($jours_reserves as $jour_reserve) {
+            JourDispo::where('id_annonce', $annonce_objet->id)
+                ->where('jour', $jour_reserve)
+                ->update(['etat' => 'reserve']);
+        }
+
+        // Vérifier s'il reste des jours disponibles pour cette annonce
+        $jours_dispo = JourDispo::where('id_annonce', $annonce_objet->id)
+            ->where('etat', 'disponible')
+            ->exists();
+
+        // Si tous les jours sont réservés, mettre à jour l'état de l'annonce à "desactive"
+        if (!$jours_dispo) {
+            Annonce::where('id', $annonce_objet->id)->update(['status' => 'desactive']);
+        }
+    }
+
+    // Rediriger l'utilisateur vers la liste des annonces
+    return redirect('/annonces');
+}
+
+
   
 }

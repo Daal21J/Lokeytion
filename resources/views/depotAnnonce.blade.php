@@ -46,231 +46,145 @@
 <br>
   <div class="cont2">
     <div class="box2">
-      <form action="" class="form-inline" enctype='multipart/form-data'>
-        <div class="row mt-5">
-          <div class="col">
+    <!-- resources/views/annonces/create.blade.php -->
 
-         
+    <div class="container">
+        <h1>Créer une annonce</h1>
 
-            <div class="form-item">
-              <label for="text" style="font-size:18px">Catégorie</label>
-              <select class="input__field" id="ville" style="width:80%">
-                <option value="">-- Select an option --</option>
-                <option value="Mobiliers">Mobiliers</option>
-                <option value="Accessoires">Accessoires</option>
-                <option value="Electronique">Electronique</option>
-                <option value="Autre">Autre</option>
-              </select>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="form-group">
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" id="titre" class="form-control @error('titre') is-invalid @enderror" value="{{ old('titre') }}" required>
+                @error('titre')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
-          </div>
-
-          <div class="col">
-            <div class="form-item ">
-              <label for="text" style="font-size:18px">Ville</label>
-              <input type="text" id="floatingInput" style="width:80%" class="input__field">
-
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-5">
-
-          <div class="col">
-            <div class="form-item">
-              <label for="text" style="font-size:18px">Titre de l'annonce</label>
-              <input type="text" id="floatingInput" style="width:80%">
-
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-item">
-              <label for="text" style="font-size:18px">Prix</label>
-              <input type="text" id="floatingInput" style="width:80%">
-              <span>DH</span>
+            <div class="form-group">
+                <label for="categorie">Catégorie</label>
+                <select name="categorie" id="categorie" class="form-control @error('categorie') is-invalid @enderror" required>
+                    <option value="">Sélectionner une catégorie</option>
+                    <option value="Electronique" {{ old('categorie') == 'Electronique' ? 'selected' : '' }}>Electronique</option>
+                    <option value="Vêtements" {{ old('categorie') == 'Vêtements' ? 'selected' : '' }}>Vêtements</option>
+                    <option value="Maison" {{ old('categorie') == 'Maison' ? 'selected' : '' }}>Maison</option>
+                </select>
+                @error('categorie')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
-          </div>
-
-
-        </div>
-
-
-
-        <div class="row mt-5">
-          <div class="titre">
-            <h4>Disponibilité</h4>
-          </div>
-
-
-          <div class="ctnr">
-            <div>
-              <label for="Lundi">
-                <input type="checkbox" value="Lundi" id="Lundi">
-                <span>Lundi</span>
-
-              </label>
+            <div class="form-group">
+                <label for="discription">Description</label>
+                <textarea name="discription" id="discription" class="form-control @error('discription') is-invalid @enderror" required>{{ old('discription') }}</textarea>
+                @error('discription')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-            <div>
-              <label for="Mardi">
-                <input type="checkbox" value="Mardi" id="Mardi">
-                <span>Mardi</span>
 
-              </label>
+            <div class="form-group">
+                <label for="prix">Prix (en euros)</label>
+                <input type="number" name="prix" id="prix" class="form-control @error('prix') is-invalid @enderror" value="{{ old('prix') }}" required>
+                @error('prix')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-            <div>
-              <label for="Mercredi">
-                <input type="checkbox" value="Mercredi" id="Mercredi">
-                <span>Mercredi</span>
 
-              </label>
+            <div class="form-group">
+                <label for="ville">Ville</label>
+                <input type="text" name="ville" id="ville" class="form-control @error('ville') is-invalid @enderror" value="{{ old('ville') }}" required>
+                @error('ville')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-            <div>
-              <label for="Jeudi">
-                <input type="checkbox" value="Jeudi" id="Jeudi">
-                <span>Jeudi</span>
 
-              </label>
-            </div>
-            <div>
-              <label for="Vendredi">
-                <input type="checkbox" value="Vendredi" id="Vendredi">
-                <span>Vendredi</span>
+            <div class="form-group">
+    <label for="image">Images</label>
+    <input type="file" class="form-control-file @error('image.*') is-invalid @enderror" id="image" name="image[]" multiple required>
+    @error('image.*')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+     </div>
 
-              </label>
-            </div>
-            <div>
-              <label for="Samedi">
-                <input type="checkbox" value="Samedi" id="Samedi">
-                <span>Samedi</span>
+        <div class="form-group row">
+        <label for="jours" class="col-md-4 col-form-label text-md-right">Jours disponibles</label>
 
-              </label>
+        <div class="col-md-6">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="lundi" id="lundi">
+                <label class="form-check-label" for="lundi">Lundi</label>
             </div>
-            <div>
-              <label for="Dimanche">
-                <input type="checkbox" value="Dimanche" id="Dimanche">
-                <span>Dimanche</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="mardi" id="mardi">
+                <label class="form-check-label" for="mardi">Mardi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="mercredi" id="mercredi">
+                <label class="form-check-label" for="mercredi">Mercredi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="jeudi" id="jeudi">
+                <label class="form-check-label" for="jeudi">Jeudi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="vendredi" id="vendredi">
+                <label class="form-check-label" for="vendredi">Vendredi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="samedi" id="samedi">
+                <label class="form-check-label" for="samedi">Samedi</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="jours[]" value="dimanche" id="dimanche">
+                <label class="form-check-label" for="dimanche">Dimanche</label>
+            </div>
 
-              </label>
-            </div>
-            <!--
-            <div class="form-check mx-2 form-check-inline">
-              <input class="form-check-input " type="checkbox" value="Mardi" id="Mardi">
-              <label class="form-check-label" for="Mardi">
-                Mardi
-              </label>
-            </div>
-            <div class="form-check mx-2 form-check-inline">
-              <input class="form-check-input " type="checkbox" value="Mercredi" id="Mercredi">
-              <label class="form-check-label" for="Mercredi">
-                Mercredi
-              </label>
-            </div>
-            <div class="form-check mx-2 form-check-inline">
-              <input class="form-check-input " type="checkbox" value="Jeudi" id="Jeudi">
-              <label class="form-check-label" for="Jeudi">
-                Jeudi
-              </label>
-            </div>
-            <div class="form-check mx-2 form-check-inline">
-              <input class="form-check-input " type="checkbox" value="Vendredi" id="Vendredi">
-              <label class="form-check-label" for="Vendredi">
-                Vendredi
-              </label>
-            </div>
-            <div class="form-check mx-2 form-check-inline">
-              <input class="form-check-input " type="checkbox" value="Samedi" id="Samedi">
-              <label class="form-check-label" for="Samedi">
-                Samedi
-              </label>
-            </div>
-            <div class="form-check mx-2 form-check-inline">
-              <input class="form-check-input " type="checkbox" value="Dimanche" id="Dimanche">
-              <label class="form-check-label" for="Dimanche">
-                Dimanche
-              </label>
-            </div>-->
-          </div>
-
-        </div>
-
-        <div class="row mt-5">
-
-          <div class="col">
-            <div class="form-group row">
-              <div class="des">
-                <h4>Description</h4>
-              </div>
-              
-              <div class="col-sm-9">
-                <textarea class="form-control my-3 " id="description" rows="10" style="border: 1.5px solid #404040; width:110%"></textarea>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col">
-            <!-- Upload Area -->
-            <div id="uploadArea" class="upload-area">
-              <!-- Header -->
-              <div class="upload-area__header">
-                <h1 class="upload-area__title">Télecharger votre image</h1>
-                <p class="upload-area__paragraph">
-                  <strong class="upload-area__tooltip">
-                    Les extensions possibles
-                    <span class="upload-area__tooltip-data"></span> <!-- Data Will be Comes From Js -->
-                  </strong>
-                </p>
-              </div>
-              <!-- End Header -->
-
-              <!-- Drop Zoon -->
-              <div id="dropZoon" class="upload-area__drop-zoon drop-zoon">
-                <span class="drop-zoon__icon">
-                  <i class='bx bxs-file-image'></i>
+            @error('jours')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
                 </span>
-                <p class="drop-zoon__paragraph">Drop your file here or Click to browse</p>
-                <span id="loadingText" class="drop-zoon__loading-text">Please Wait</span>
-                <img src="" alt="Preview Image" id="previewImage" class="drop-zoon__preview-image" draggable="false">
-                <input type="file" id="fileInput1" class="drop-zoon__file-input" accept="image/*" multiple>
-              </div>
-              <!-- End Drop Zoon -->
-
-              <!-- File Details -->
-              <div id="fileDetails" class="upload-area__file-details file-details">
-                <h3 class="file-details__title">Uploaded File</h3>
-
-                <div id="uploadedFile1" class="uploaded-file">
-                  <div class="uploaded-file__icon-container">
-                    <i class='bx bxs-file-blank uploaded-file__icon'></i>
-                    <span class="uploaded-file__icon-text"></span> <!-- Data Will be Comes From Js -->
-                  </div>
-
-                  <div id="uploadedFileInfo" class="uploaded-file__info">
-                    <span class="uploaded-file__name">Proejct 1</span>
-                    <span class="uploaded-file__counter">0%</span>
-                  </div>
-                </div>
-              </div>
-              <!--
-              <div class="button-group">
-                <button>Send</button>
-              </div>
--->
-              <!-- End File Details -->
-            </div>
-
-            <!-- End Upload Area -->
-          </div>
-        </div>
-        <div class="button-group d-flex justify-content-center">
-          <button>Déposer l'annonce</button>
+            @enderror
         </div>
     </div>
 
-    </form>
-  </div>
+    <div class="form-group row mb-0">
+        <div class="col-md-6 offset-md-4">
+            <button type="submit" class="btn btn-primary">
+                {{ __('Créer l\'annonce') }}
+            </button>
+        </div>
+    </div>
+   </form>
 
+
+  </div>
+  </div>
+  </div>
+  
+  
 
 
   <br><br><br><br>

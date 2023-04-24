@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Panier extends Model
 {
     use HasFactory;
+    protected $fillable = ['id_annonce','id_client', 'jour_reservation'];
+
 }

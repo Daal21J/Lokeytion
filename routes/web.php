@@ -22,7 +22,7 @@ Route::get('/',[StaticController::class,'index']);
 Route::get('/login',[StaticController::class,'login']);
 Route::get('/annonces',[AnnonceController::class,'showAnnonces']);
 Route::get('/depotAnnonces',[AnnonceController::class,'depot']);
-Route::get('/detail',[AnnonceController::class,'details']);
+Route::post('/store', [App\Http\Controllers\AnnonceController::class, 'store'])->name('store');
 Route::get('/MesAnnonces',[AnnonceController::class,'mesannonces']);
 Route::get('/MesDemandes',[DemandeController::class,'showDemande'])->name('Demande.show');
 Route::get('/MesDemandes/Refuse/{id}',[DemandeController::class,'refuse'])->name('Demande.refuse');
@@ -30,3 +30,14 @@ Route::get('/MesDemandes/Accept/{id}',[DemandeController::class,'accept'])->name
 Route::get('/MesDemandes/search',[DemandeController::class,'search'])->name('Demande.search');
 Route::get('/MonPanier',[PanierController::class,'showPanier']);
 Route::get('/Comment',[CommentController::class,'showComment']);
+
+
+Route::get('/detail/{id}', [AnnonceController::class,'details']);
+Route::post('/addToPanier/{id}', [PanierController::class, 'addToPanier'])->name('addToPanier');
+Route::post('/louer/{id}', [DemandeController::class, 'louer'])->name('louer');
+
+
+
+
+
+

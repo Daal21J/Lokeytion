@@ -9,4 +9,6 @@ class jourdispo extends Model
 {
     use HasFactory;
     protected $fillable = ['id_user','id_demande', 'msg','etat'];
+    protected $fillable2 = ['id_annonce','jour','etat'];
+
 }
