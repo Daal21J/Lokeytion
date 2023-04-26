@@ -100,7 +100,6 @@ class DemandeController extends Controller
         $demande->etat = 'Acceptée';
         $demande->save();
         $parts = explode(",", $demande->jour_reservation);
-
         $annonce = $demande->id_annonce;
         $annonces = Annonce::find($annonce);
         $annonces->status = "active";
@@ -146,8 +145,22 @@ class DemandeController extends Controller
 
         // $client = User::find($temp);
         //Mail::to('example@example.com')->send(new MyEmail($data));
+        $j = count($parts)-1;
+        $givenDay = $parts[$j]; // The given day
+        $today = Carbon::today(); // Get today's date
 
-
+        $dayOfWeek = $today->dayOfWeek;
+            $dayMap = [
+                'dimanche' => 0,
+                'lundi' => 1,
+                'mardi' => 2,
+                'mercredi' => 3,
+                'jeudi' => 4,
+                'vendredi' => 5,
+                'samedi' => 6,
+            ];
+        $givenDayNumber = $dayMap[strtolower($givenDay)];
+        $daysUntilNextDay = ($givenDayNumber - $dayOfWeek + 7) % 7;
 
 
 
